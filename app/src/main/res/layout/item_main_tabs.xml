@@ -1,0 +1,18 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="@dimen/offset_4dp"
+                android:paddingRight="@dimen/offset_4dp">
+
+    <TextView
+        android:id="@+id/tab_main_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="标头"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/font_size_small"/>
+
+</RelativeLayout>
