@@ -8,12 +8,19 @@ import android.widget.TextView;
 
 import com.jiangtao.shuzicaimanager.R;
 import com.jiangtao.shuzicaimanager.basic.base.BaseFragment;
+import com.jiangtao.shuzicaimanager.model.entry.GameInfo;
+import com.jiangtao.shuzicaimanager.model.entry.Goods;
+import com.jiangtao.shuzicaimanager.model.entry.GuessForecastRecord;
+import com.jiangtao.shuzicaimanager.model.entry.GuessMantissaRecord;
+import com.jiangtao.shuzicaimanager.model.entry.GuessWholeRecord;
+import com.jiangtao.shuzicaimanager.model.entry.WealthDetail;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,11 +29,12 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.CountListener;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by Nicky on 2017/3/5.
+ * t
  */
-
 public class StatisticalFragment extends BaseFragment {
     //参数
     public static final String ARGS_PAGE = "args_page";
@@ -39,6 +47,39 @@ public class StatisticalFragment extends BaseFragment {
     //今日活跃
     @BindView(R.id.main_user_activity)
     TextView main_user_activity;
+    //财富
+    @BindView(R.id.wealth_value_txt)
+    TextView wealth_value_txt;
+    //充值人数
+    @BindView(R.id.recharge_count_txt)
+    TextView recharge_count_txt;
+    //总充值金额
+    @BindView(R.id.recharge_value_txt)
+    TextView recharge_value_txt;
+    //参与人数
+    @BindView(R.id.join_person_count_txt)
+    TextView join_person_count_txt;
+    //猜涨人数
+    @BindView(R.id.join_up_count_txt)
+    TextView join_up_count_txt;
+    //猜跌人数
+    @BindView(R.id.join_down_count_txt)
+    TextView join_down_count_txt;
+    //猜尾数
+    @BindView(R.id.weishu_info_txt)
+    TextView weishu_info_txt;
+    //猜全数
+    @BindView(R.id.quanshu_info_txt)
+    TextView quanshu_info_txt;
+    //商品总数
+    @BindView(R.id.goods_count_txt)
+    TextView goods_count_txt;
+    //库存紧张
+    @BindView(R.id.goods_not_enough_txt)
+    TextView goods_not_enough_txt;
+    //库存紧张
+    @BindView(R.id.goods_zero_txt)
+    TextView goods_zero_txt;
 
     //设置点击事件
     @OnClick({R.id.userStatisticsLy})
@@ -50,7 +91,6 @@ public class StatisticalFragment extends BaseFragment {
                 startActivity(intent);
             }
             break;
-
         }
     }
 
@@ -83,6 +123,11 @@ public class StatisticalFragment extends BaseFragment {
     public void loadLayout(View viewDataBinding) {
         getUserCount();
         getTodayAdded();
+        getWealthValue();
+        getTodayPeopleCount();
+        getTodayWealthValue();
+        getNewestGameInfo();
+        getGoodsInfo();
     }
 
     /**
@@ -135,4 +180,184 @@ public class StatisticalFragment extends BaseFragment {
             }
         });
     }
+
+    /***
+     * 获取所有财富数据
+     */
+    private void getWealthValue() {
+        BmobQuery<WealthDetail> query = new BmobQuery<WealthDetail>();
+        query.addWhereEqualTo("operationType", WealthDetail.Operation_Type_Recharge);
+        query.setLimit(5000);
+        query.findObjects(new FindListener<WealthDetail>() {
+            @Override
+            public void done(List<WealthDetail> list, BmobException e) {
+                float count = 0;
+                if (null != list) {
+                    for (WealthDetail wealth : list) {
+                        count = count + wealth.getOperationValue();
+                    }
+                }
+                wealth_value_txt.setText("总金额：" + count);
+            }
+        });
+    }
+
+    /***
+     * 获取今日充值数据
+     */
+    private void getTodayPeopleCount() {
+        BmobQuery<WealthDetail> query = new BmobQuery<WealthDetail>();
+        query.addWhereEqualTo("operationType", WealthDetail.Operation_Type_Recharge);
+        Calendar now = Calendar.getInstance();
+        query.addWhereGreaterThanOrEqualTo("createdAt", new BmobDate(new Date(now.get(Calendar.YEAR), now.get
+                (Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))));
+        query.count(WealthDetail.class, new CountListener() {
+            @Override
+            public void done(Integer count, BmobException e) {
+                if (e == null) {
+                    recharge_count_txt.setText("充值：" + count + "人");
+                } else {
+                    recharge_count_txt.setText("充值：0人");
+                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                }
+            }
+        });
+    }
+
+    /***
+     * 获取今日充值数据
+     */
+    private void getTodayWealthValue() {
+        BmobQuery<WealthDetail> query = new BmobQuery<WealthDetail>();
+        query.addWhereEqualTo("operationType", WealthDetail.Operation_Type_Recharge);
+        Calendar now = Calendar.getInstance();
+        query.addWhereGreaterThanOrEqualTo("createdAt", new BmobDate(new Date(now.get(Calendar.YEAR), now.get
+                (Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))));
+        query.findObjects(new FindListener<WealthDetail>() {
+            @Override
+            public void done(List<WealthDetail> list, BmobException e) {
+                float count = 0;
+                if (null != list) {
+                    for (WealthDetail wealth : list) {
+                        count = count + wealth.getOperationValue();
+                    }
+                }
+                recharge_value_txt.setText("今日：" + count + "元");
+            }
+        });
+    }
+
+    //获取最新一期的游戏数据
+    private void getNewestGameInfo() {
+        BmobQuery<GameInfo> query = new BmobQuery<GameInfo>();
+        query.findObjects(new FindListener<GameInfo>() {
+            @Override
+            public void done(List<GameInfo> list, BmobException e) {
+                float count = 0;
+                if (null != list && list.size() > 0) {
+                    for (GameInfo info : list) {
+                        if (info.getGameType() == GameInfo.type_zhangdie) {
+                            getGuessForecastRecordCount(info.getNewestNum());
+                        } else if (info.getGameType() == GameInfo.type_quanshu) {
+                            getGuessMantissaRecordCount(info.getNewestNum());
+                        } else if (info.getGameType() == GameInfo.type_weishu) {
+                            getGuessWholeRecordCount(info.getNewestNum());
+                        }
+                    }
+                }
+                recharge_value_txt.setText("今日：" + count + "元");
+            }
+        });
+    }
+
+    //猜涨跌
+    private void getGuessForecastRecordCount(int periodCount) {
+        BmobQuery<GuessForecastRecord> query = new BmobQuery<GuessForecastRecord>();
+        query.addWhereEqualTo("periodCount", periodCount);
+        query.count(GuessForecastRecord.class, new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                join_person_count_txt.setText("总人数：" + integer);
+            }
+        });
+
+        //查询猜涨人数
+        BmobQuery<GuessForecastRecord> query1 = new BmobQuery<GuessForecastRecord>();
+        query1.addWhereEqualTo("periodCount", periodCount);
+        query1.addWhereEqualTo("periodValue", 1);
+        query1.count(GuessForecastRecord.class, new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                join_up_count_txt.setText("猜涨：" + integer);
+            }
+        });
+
+        //查询猜跌人数
+        BmobQuery<GuessForecastRecord> query2 = new BmobQuery<GuessForecastRecord>();
+        query2.addWhereEqualTo("periodCount", periodCount);
+        query2.addWhereEqualTo("periodValue", 0);
+        query2.count(GuessForecastRecord.class, new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                join_down_count_txt.setText("猜跌：" + integer);
+            }
+        });
+    }
+
+    //猜尾数
+    private void getGuessMantissaRecordCount(final int periodCount) {
+        BmobQuery<GuessMantissaRecord> query = new BmobQuery<GuessMantissaRecord>();
+        query.addWhereEqualTo("periodNum", periodCount);
+        query.count(GuessMantissaRecord.class, new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                weishu_info_txt.setText("尾数（" + periodCount + "期）   参与人数：" + integer);
+            }
+        });
+    }
+
+    //猜全数
+    private void getGuessWholeRecordCount(final int periodCount) {
+        BmobQuery<GuessWholeRecord> query = new BmobQuery<GuessWholeRecord>();
+        query.addWhereEqualTo("periodNum", periodCount);
+        query.count(GuessWholeRecord.class, new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                quanshu_info_txt.setText("全数（" + periodCount + "期）   参与人数：" + integer);
+            }
+        });
+    }
+
+
+    //获取商品信息
+    private void getGoodsInfo() {
+        BmobQuery<Goods> query = new BmobQuery<Goods>();
+        query.count(Goods.class, new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                goods_count_txt.setText("总数：" + integer);
+            }
+        });
+
+        //查询紧张的库存
+        BmobQuery<Goods> query1 = new BmobQuery<Goods>();
+        query1.addWhereLessThanOrEqualTo("inventory",5);
+        query1.count(Goods.class, new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                goods_not_enough_txt.setText("库存紧张：" + integer);
+            }
+        });
+
+        //查询库存为空的商品
+        BmobQuery<Goods> query2 = new BmobQuery<Goods>();
+        query2.addWhereLessThanOrEqualTo("inventory",0);
+        query2.count(Goods.class, new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                goods_zero_txt.setText("库存为空：" + integer);
+            }
+        });
+    }
+
 }

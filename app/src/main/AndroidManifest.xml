@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.jiangtao.shuzicaimanager.model.main.SplashActivity"
+            android:name=".model.main.SplashActivity"
             android:theme="@style/StartStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -31,10 +31,18 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.jiangtao.shuzicaimanager.model.main.MainActivity"/>
-        <activity android:name="com.jiangtao.shuzicaimanager.model.person.PersonActivity">
+        <activity android:name=".model.main.MainActivity"/>
+        <activity android:name=".model.person.PersonActivity">
         </activity>
-        <activity android:name="com.jiangtao.shuzicaimanager.model.statistical.UserCountActivity">
+        <activity android:name=".model.statistical.UserCountActivity">
+        </activity>
+        <activity android:name=".model.statistical.WealthActivity">
+        </activity>
+        <activity android:name=".model.statistical.ForecastRecordActivity">
+        </activity>
+        <activity android:name=".model.statistical.MantissaRecordActivity">
+        </activity>
+        <activity android:name=".model.statistical.WholeRecordActivity">
         </activity>
     </application>
 
