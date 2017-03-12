@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/user_count_item_root"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:padding="@dimen/offset_10dp">
+
+    <TextView
+        android:id="@+id/up_down_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset_4dp"
+        android:text="2017-18-12"/>
+
+    <TextView
+        android:id="@+id/up_down_time_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset_4dp"
+        android:layout_weight="1"
+        android:text="名字"/>
+
+    <TextView
+        android:id="@+id/up_down_forecast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset_4dp"
+        android:text="看涨"/>
+
+    <TextView
+        android:id="@+id/up_down_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset_4dp"
+        android:text="200金币"/>
+
+</LinearLayout>

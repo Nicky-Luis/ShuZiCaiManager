@@ -12,7 +12,7 @@
     <include layout="@layout/toolbar"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/user_count_refresh_widget"
+        android:id="@+id/up_down_refresh_widget"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_light_white"
@@ -23,12 +23,12 @@
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/userRecyclerView"
+                android:id="@+id/up_down_RecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
             <com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader
-                android:id="@+id/userCountHeader"
+                android:id="@+id/up_down_CountHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|top">
@@ -41,7 +41,7 @@
                     android:padding="@dimen/offset_10dp">
 
                     <TextView
-                        android:id="@+id/userCountTxt"
+                        android:id="@+id/up_down_CountTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="总计：3576人"

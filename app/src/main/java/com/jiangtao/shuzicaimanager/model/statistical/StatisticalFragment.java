@@ -82,12 +82,24 @@ public class StatisticalFragment extends BaseFragment {
     TextView goods_zero_txt;
 
     //设置点击事件
-    @OnClick({R.id.userStatisticsLy})
+    @OnClick({R.id.userStatisticsLy,R.id.wealthStatisticsLy,R.id.upDownStatisticsLy})
     public void OnClick(View view) {
         switch (view.getId()) {
 
             case R.id.userStatisticsLy: {
                 Intent intent = new Intent(getActivity(), UserCountActivity.class);
+                startActivity(intent);
+            }
+            break;
+
+            case R.id.wealthStatisticsLy: {
+                Intent intent = new Intent(getActivity(), WealthDetailActivity.class);
+                startActivity(intent);
+            }
+            break;
+
+            case R.id.upDownStatisticsLy:{
+                Intent intent = new Intent(getActivity(), GameUpAndDownActivity.class);
                 startActivity(intent);
             }
             break;
@@ -341,7 +353,7 @@ public class StatisticalFragment extends BaseFragment {
 
         //查询紧张的库存
         BmobQuery<Goods> query1 = new BmobQuery<Goods>();
-        query1.addWhereLessThanOrEqualTo("inventory",5);
+        query1.addWhereLessThanOrEqualTo("inventory", 5);
         query1.count(Goods.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
@@ -351,7 +363,7 @@ public class StatisticalFragment extends BaseFragment {
 
         //查询库存为空的商品
         BmobQuery<Goods> query2 = new BmobQuery<Goods>();
-        query2.addWhereLessThanOrEqualTo("inventory",0);
+        query2.addWhereLessThanOrEqualTo("inventory", 0);
         query2.count(Goods.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {

@@ -163,6 +163,6 @@ public interface APICollections {
      * @param where
      * @return
      */
-    @GET("1/classes/_User")
+    @GET("1/classes/UserModel")
     Call<JsonObject> getUserInfo(@Query("where") String where);
 }

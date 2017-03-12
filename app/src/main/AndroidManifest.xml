@@ -44,6 +44,12 @@
         </activity>
         <activity android:name=".model.statistical.WholeRecordActivity">
         </activity>
+        <activity android:name=".model.statistical.UserDetailActivity">
+        </activity>
+        <activity android:name=".model.statistical.WealthDetailActivity">
+        </activity>
+        <activity android:name=".model.statistical.GameUpAndDownActivity">
+        </activity>
     </application>
 
 </manifest>

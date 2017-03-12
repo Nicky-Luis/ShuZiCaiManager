@@ -84,6 +84,7 @@
         <!--========================财务==========================-->
 
         <LinearLayout
+            android:id="@+id/wealthStatisticsLy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="1px"
@@ -156,6 +157,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/upDownStatisticsLy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="1px"
