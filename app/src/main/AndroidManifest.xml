@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".model.main.MainActivity"/>
-        <activity android:name=".model.person.PersonActivity">
+        <activity android:name=".model.person.LoginActivity">
         </activity>
         <activity android:name=".model.statistical.UserCountActivity">
         </activity>
@@ -48,7 +48,34 @@
         </activity>
         <activity android:name=".model.statistical.WealthDetailActivity">
         </activity>
-        <activity android:name=".model.statistical.GameUpAndDownActivity">
+        <activity android:name=".model.statistical.GoodsManagerActivity">
+        </activity>
+        <activity android:name=".model.statistical.goods.UnprocessedOrderActivity">
+        </activity>
+        <activity android:name=".model.statistical.goods.HistoryOrderActivity">
+        </activity>
+        <activity android:name=".model.statistical.goods.OnlineGoodsActivity">
+        </activity>
+        <activity android:name=".model.statistical.goods.NervousGoodsActivity">
+        </activity>
+        <activity android:name=".model.statistical.goods.SoldOutActivity">
+        </activity>
+        <activity android:name=".model.statistical.goods.GoodsInfoActivity">
+        </activity>
+        <activity android:name=".model.statistical.goods.AddGoodsActivity">
+        </activity>
+        <activity android:name=".common.photo_gallery.imageloader.GalleyActivity"/>
+        <activity android:name=".model.person.PersonActivity">
+        </activity>
+        <activity android:name=".model.person.ManagerUserActivity">
+        </activity>
+        <activity android:name=".model.person.AddManagerUserActivity">
+        </activity>
+        <activity android:name=".model.setting.VirtualUserActivity">
+        </activity>
+        <activity android:name=".model.setting.AddVirtualUserActivity">
+        </activity>
+        <activity android:name=".model.setting.RuleSetActivity">
         </activity>
     </application>
 

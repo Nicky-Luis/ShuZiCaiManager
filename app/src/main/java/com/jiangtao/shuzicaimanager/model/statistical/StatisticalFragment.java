@@ -2,6 +2,7 @@ package com.jiangtao.shuzicaimanager.model.statistical;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -35,18 +36,18 @@ import cn.bmob.v3.listener.FindListener;
  * Created by Nicky on 2017/3/5.
  * t
  */
-public class StatisticalFragment extends BaseFragment {
+public class StatisticalFragment extends BaseFragment
+        implements SwipeRefreshLayout.OnRefreshListener {
     //参数
     public static final String ARGS_PAGE = "args_page";
+    @BindView(R.id.main_root_view)
+    SwipeRefreshLayout refreshLayout;
     //用户数据
     @BindView(R.id.main_user_count)
     TextView main_user_count;
     //今日新增
     @BindView(R.id.main_user_added)
     TextView main_user_added;
-    //今日活跃
-    @BindView(R.id.main_user_activity)
-    TextView main_user_activity;
     //财富
     @BindView(R.id.wealth_value_txt)
     TextView wealth_value_txt;
@@ -82,24 +83,49 @@ public class StatisticalFragment extends BaseFragment {
     TextView goods_zero_txt;
 
     //设置点击事件
-    @OnClick({R.id.userStatisticsLy,R.id.wealthStatisticsLy,R.id.upDownStatisticsLy})
+    @OnClick({R.id.userStatisticsLy, R.id.wealthStatisticsLy, R.id.upDownStatisticsLy,
+            R.id.mantissaStatisticsLy,R.id.wholeStatisticsLy,R.id.goodsStatisticsLy,
+            R.id.goodsStatisticsLy1,R.id.userStatisticsLy1, R.id.wealthStatisticsLy1,
+            R.id.upDownStatisticsLy1})
     public void OnClick(View view) {
         switch (view.getId()) {
 
+            case R.id.userStatisticsLy1:
             case R.id.userStatisticsLy: {
                 Intent intent = new Intent(getActivity(), UserCountActivity.class);
                 startActivity(intent);
             }
             break;
 
+            case R.id.wealthStatisticsLy1:
             case R.id.wealthStatisticsLy: {
                 Intent intent = new Intent(getActivity(), WealthDetailActivity.class);
                 startActivity(intent);
             }
             break;
 
-            case R.id.upDownStatisticsLy:{
-                Intent intent = new Intent(getActivity(), GameUpAndDownActivity.class);
+            case R.id.upDownStatisticsLy1:
+            case R.id.upDownStatisticsLy: {
+                Intent intent = new Intent(getActivity(), ForecastRecordActivity.class);
+                startActivity(intent);
+            }
+            break;
+
+            case R.id.mantissaStatisticsLy: {
+                Intent intent = new Intent(getActivity(), MantissaRecordActivity.class);
+                startActivity(intent);
+            }
+            break;
+
+            case R.id.wholeStatisticsLy: {
+                Intent intent = new Intent(getActivity(), WholeRecordActivity.class);
+                startActivity(intent);
+            }
+            break;
+
+            case R.id.goodsStatisticsLy1:
+            case R.id.goodsStatisticsLy: {
+                Intent intent = new Intent(getActivity(), GoodsManagerActivity.class);
                 startActivity(intent);
             }
             break;
@@ -133,6 +159,11 @@ public class StatisticalFragment extends BaseFragment {
 
     @Override
     public void loadLayout(View viewDataBinding) {
+        initSwipeRefresh();
+        getData();
+    }
+
+    private void getData(){
         getUserCount();
         getTodayAdded();
         getWealthValue();
@@ -140,6 +171,15 @@ public class StatisticalFragment extends BaseFragment {
         getTodayWealthValue();
         getNewestGameInfo();
         getGoodsInfo();
+    }
+    //初始化swipe
+    private void initSwipeRefresh() {
+        refreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_light,
+                android.R.color.holo_green_light,
+                android.R.color.holo_red_light,
+                android.R.color.holo_orange_light);
+        refreshLayout.setOnRefreshListener(this);
     }
 
     /**
@@ -162,6 +202,7 @@ public class StatisticalFragment extends BaseFragment {
         query.count(BmobUser.class, new CountListener() {
             @Override
             public void done(Integer count, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 if (e == null) {
                     main_user_count.setText("总用户：" + count);
                 } else {
@@ -183,6 +224,7 @@ public class StatisticalFragment extends BaseFragment {
         query.count(BmobUser.class, new CountListener() {
             @Override
             public void done(Integer count, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 if (e == null) {
                     main_user_added.setText("今日新增：" + count);
                 } else {
@@ -203,6 +245,7 @@ public class StatisticalFragment extends BaseFragment {
         query.findObjects(new FindListener<WealthDetail>() {
             @Override
             public void done(List<WealthDetail> list, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 float count = 0;
                 if (null != list) {
                     for (WealthDetail wealth : list) {
@@ -226,6 +269,7 @@ public class StatisticalFragment extends BaseFragment {
         query.count(WealthDetail.class, new CountListener() {
             @Override
             public void done(Integer count, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 if (e == null) {
                     recharge_count_txt.setText("充值：" + count + "人");
                 } else {
@@ -248,6 +292,7 @@ public class StatisticalFragment extends BaseFragment {
         query.findObjects(new FindListener<WealthDetail>() {
             @Override
             public void done(List<WealthDetail> list, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 float count = 0;
                 if (null != list) {
                     for (WealthDetail wealth : list) {
@@ -265,6 +310,7 @@ public class StatisticalFragment extends BaseFragment {
         query.findObjects(new FindListener<GameInfo>() {
             @Override
             public void done(List<GameInfo> list, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 float count = 0;
                 if (null != list && list.size() > 0) {
                     for (GameInfo info : list) {
@@ -289,6 +335,7 @@ public class StatisticalFragment extends BaseFragment {
         query.count(GuessForecastRecord.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 join_person_count_txt.setText("总人数：" + integer);
             }
         });
@@ -300,6 +347,7 @@ public class StatisticalFragment extends BaseFragment {
         query1.count(GuessForecastRecord.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 join_up_count_txt.setText("猜涨：" + integer);
             }
         });
@@ -311,6 +359,7 @@ public class StatisticalFragment extends BaseFragment {
         query2.count(GuessForecastRecord.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 join_down_count_txt.setText("猜跌：" + integer);
             }
         });
@@ -323,6 +372,7 @@ public class StatisticalFragment extends BaseFragment {
         query.count(GuessMantissaRecord.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 weishu_info_txt.setText("尾数（" + periodCount + "期）   参与人数：" + integer);
             }
         });
@@ -335,6 +385,7 @@ public class StatisticalFragment extends BaseFragment {
         query.count(GuessWholeRecord.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 quanshu_info_txt.setText("全数（" + periodCount + "期）   参与人数：" + integer);
             }
         });
@@ -347,6 +398,7 @@ public class StatisticalFragment extends BaseFragment {
         query.count(Goods.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 goods_count_txt.setText("总数：" + integer);
             }
         });
@@ -357,6 +409,7 @@ public class StatisticalFragment extends BaseFragment {
         query1.count(Goods.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 goods_not_enough_txt.setText("库存紧张：" + integer);
             }
         });
@@ -367,9 +420,14 @@ public class StatisticalFragment extends BaseFragment {
         query2.count(Goods.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
+                refreshLayout.setRefreshing(false);
                 goods_zero_txt.setText("库存为空：" + integer);
             }
         });
     }
 
+    @Override
+    public void onRefresh() {
+        getData();
+    }
 }

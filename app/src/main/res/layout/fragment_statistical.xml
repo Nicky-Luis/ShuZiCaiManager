@@ -1,359 +1,347 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/whitesmoke">
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/main_root_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_light_white"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="@color/whitesmoke">
 
-        <!--用户统计-->
         <LinearLayout
-            android:id="@+id/userStatisticsLy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="1px"
-            android:layout_marginTop="@dimen/offset_10dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/offset_2dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
+            <!--用户统计-->
+            <LinearLayout
+                android:id="@+id/userStatisticsLy"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/offset_4dp"
-                android:text="用户统计"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/font_size_normal"/>
+                android:layout_marginBottom="1px"
+                android:layout_marginTop="@dimen/offset_10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/offset_2dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/right_more"/>
-        </LinearLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/offset_4dp"
+                    android:text="用户统计"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/font_size_normal"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/offset_10dp">
-
-            <TextView
-                android:id="@+id/main_user_count"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/offset_8dp"
-                android:text="----"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/font_size_huge"
-                android:textStyle="bold"/>
+            </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/userStatisticsLy1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/offset_10dp">
+
+                <TextView
+                    android:id="@+id/main_user_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/offset_8dp"
+                    android:text="总用户"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/font_size_xlarge_high"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/offset_8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/main_user_added"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/offset_8dp"
+                        android:text="今日新增"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/font_size_normal"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--========================财务==========================-->
+
+            <LinearLayout
+                android:id="@+id/wealthStatisticsLy"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/offset_8dp"
-                android:orientation="vertical">
+                android:layout_marginBottom="1px"
+                android:layout_marginTop="@dimen/offset_10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/offset_2dp">
 
                 <TextView
-                    android:id="@+id/main_user_added"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/offset_8dp"
-                    android:text="--"
+                    android:layout_weight="1"
+                    android:padding="@dimen/offset_4dp"
+                    android:text="财务统计"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/font_size_normal"/>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wealthStatisticsLy1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/offset_10dp">
+
                 <TextView
-                    android:id="@+id/main_user_activity"
+                    android:id="@+id/wealth_value_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/offset_8dp"
+                    android:text="总金额"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/font_size_xlarge_high"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/offset_8dp"
-                    android:layout_marginTop="@dimen/offset_8dp"
-                    android:text="--"
+                    android:layout_marginLeft="@dimen/offset_8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/recharge_count_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/offset_8dp"
+                        android:text="今日充值"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/font_size_normal"/>
+
+                    <TextView
+                        android:id="@+id/recharge_value_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/offset_8dp"
+                        android:layout_marginTop="@dimen/offset_8dp"
+                        android:text="今日总额"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/font_size_normal"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/upDownStatisticsLy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1px"
+                android:layout_marginTop="@dimen/offset_10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/offset_2dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/offset_4dp"
+                    android:text="涨跌预测"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/font_size_normal"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/upDownStatisticsLy1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/offset_10dp">
+
+                <TextView
+                    android:id="@+id/join_person_count_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/offset_8dp"
+                    android:text="总人数"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/font_size_xlarge_high"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/offset_8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/join_up_count_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/offset_8dp"
+                        android:text="猜涨人数"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/font_size_normal"/>
+
+                    <TextView
+                        android:id="@+id/join_down_count_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/offset_8dp"
+                        android:layout_marginTop="@dimen/offset_8dp"
+                        android:text="猜跌人数"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/font_size_normal"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mantissaStatisticsLy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1px"
+                android:layout_marginTop="@dimen/offset_2dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/offset_2dp">
+
+                <TextView
+                    android:id="@+id/weishu_info_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/offset_4dp"
+                    android:text="尾数"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/font_size_normal"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/right_more"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wholeStatisticsLy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1px"
+                android:layout_marginTop="@dimen/offset_2dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/offset_2dp">
+
+                <TextView
+                    android:id="@+id/quanshu_info_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/offset_4dp"
+                    android:text="全数"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/font_size_normal"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/right_more"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/goodsStatisticsLy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1px"
+                android:layout_marginTop="@dimen/offset_10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/offset_2dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/offset_4dp"
+                    android:text="商品管理"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/font_size_normal"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/goodsStatisticsLy1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/offset_10dp">
+
+                <TextView
+                    android:id="@+id/goods_count_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/offset_8dp"
+                    android:text="总商品"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/font_size_xlarge_high"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/offset_8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/goods_not_enough_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/offset_8dp"
+                        android:text="库存紧张"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/font_size_normal"/>
+
+                    <TextView
+                        android:id="@+id/goods_zero_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/offset_8dp"
+                        android:layout_marginTop="@dimen/offset_8dp"
+                        android:text="已经售罄"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/font_size_normal"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
-        <!--========================财务==========================-->
-
-        <LinearLayout
-            android:id="@+id/wealthStatisticsLy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1px"
-            android:layout_marginTop="@dimen/offset_10dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/offset_2dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/offset_4dp"
-                android:text="财务统计"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/font_size_normal"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/right_more"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/offset_10dp">
-
-            <TextView
-                android:id="@+id/wealth_value_txt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/offset_8dp"
-                android:text="----"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/font_size_huge"
-                android:textStyle="bold"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/offset_8dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/recharge_count_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/offset_8dp"
-                    android:text="--"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/font_size_normal"/>
-
-                <TextView
-                    android:id="@+id/recharge_value_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/offset_8dp"
-                    android:layout_marginTop="@dimen/offset_8dp"
-                    android:text="--"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/font_size_normal"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/upDownStatisticsLy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1px"
-            android:layout_marginTop="@dimen/offset_10dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/offset_2dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/offset_4dp"
-                android:text="涨跌预测"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/font_size_normal"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/right_more"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/offset_10dp">
-
-            <TextView
-                android:id="@+id/join_person_count_txt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/offset_8dp"
-                android:text="参与人数"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/font_size_huge"
-                android:textStyle="bold"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/offset_8dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/join_up_count_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/offset_8dp"
-                    android:text="猜涨人数"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/font_size_normal"/>
-
-                <TextView
-                    android:id="@+id/join_down_count_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/offset_8dp"
-                    android:layout_marginTop="@dimen/offset_8dp"
-                    android:text="猜跌人数"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/font_size_normal"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1px"
-            android:layout_marginTop="@dimen/offset_2dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/offset_2dp">
-
-            <TextView
-                android:id="@+id/weishu_info_txt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/offset_4dp"
-                android:text="尾数"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/font_size_normal"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/right_more"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1px"
-            android:layout_marginTop="@dimen/offset_2dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/offset_2dp">
-
-            <TextView
-                android:id="@+id/quanshu_info_txt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/offset_4dp"
-                android:text="全数"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/font_size_normal"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/right_more"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1px"
-            android:layout_marginTop="@dimen/offset_10dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/offset_2dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/offset_4dp"
-                android:text="商品管理"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/font_size_normal"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/right_more"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/offset_10dp">
-
-            <TextView
-                android:id="@+id/goods_count_txt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/offset_8dp"
-                android:text="----"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/font_size_huge"
-                android:textStyle="bold"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/offset_8dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/goods_not_enough_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/offset_8dp"
-                    android:text="库存紧张"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/font_size_normal"/>
-
-                <TextView
-                    android:id="@+id/goods_zero_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/offset_8dp"
-                    android:layout_marginTop="@dimen/offset_8dp"
-                    android:text="库存不够"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/font_size_normal"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

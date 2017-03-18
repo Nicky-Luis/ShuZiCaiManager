@@ -135,7 +135,7 @@ public interface APICollections {
      * @param where
      * @return
      */
-    @GET("1/classes/goodsOrder")
+    @GET("1/classes/GoodsOrder")
     Call<JsonObject> getExchangeRecord(@Query("where") String where,
                                        @Query("include") String include);
 
@@ -163,6 +163,6 @@ public interface APICollections {
      * @param where
      * @return
      */
-    @GET("1/classes/UserModel")
+    @GET("1/classes/_User")
     Call<JsonObject> getUserInfo(@Query("where") String where);
 }

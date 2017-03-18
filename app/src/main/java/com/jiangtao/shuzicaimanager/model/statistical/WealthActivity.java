@@ -26,7 +26,7 @@ public class WealthActivity extends BaseActivityWithToolBar{
     //初始化title
     private void initTitleBar() {
         //右键
-        setLeftImage(R.mipmap.ic_arrow_back_white_24dp, new View.OnClickListener() {
+        setLeftImage(R.mipmap.btn_back, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

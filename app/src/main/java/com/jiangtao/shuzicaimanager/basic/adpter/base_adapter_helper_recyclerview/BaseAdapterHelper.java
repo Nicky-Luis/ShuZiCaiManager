@@ -68,6 +68,20 @@ public class BaseAdapterHelper extends RecyclerView.ViewHolder {
         return this;
     }
 
+
+    /**
+     * Will set the text of a TextView.
+     *
+     * @param viewId The view id.
+     * @param value  The text to put in the text view.
+     * @return The BaseAdapterHelper for chaining.
+     */
+    public BaseAdapterHelper setBtnText(int viewId, String value) {
+        Button view = retrieveView(viewId);
+        view.setText(value);
+        return this;
+    }
+
     /**
      * Will set the image of an ImageView from a resource id.
      *

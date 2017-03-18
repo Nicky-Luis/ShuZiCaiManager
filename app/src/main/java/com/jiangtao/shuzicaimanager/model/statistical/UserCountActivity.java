@@ -13,21 +13,18 @@ import com.jiangtao.shuzicaimanager.R;
 import com.jiangtao.shuzicaimanager.basic.adpter.base_adapter_helper_recyclerview.BaseAdapterHelper;
 import com.jiangtao.shuzicaimanager.basic.adpter.base_adapter_helper_recyclerview.QuickAdapter;
 import com.jiangtao.shuzicaimanager.basic.base.BaseActivityWithToolBar;
-import com.jiangtao.shuzicaimanager.helper.SpacesItemDecoration;
-import com.jiangtao.shuzicaimanager.model.entry.UserModel;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.jiangtao.shuzicaimanager.common.helper.SpacesItemDecoration;
+import com.jiangtao.shuzicaimanager.model.entry._User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.CountListener;
-import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.FindListener;
 
 public class UserCountActivity extends BaseActivityWithToolBar
         implements SwipeRefreshLayout.OnRefreshListener {
@@ -45,7 +42,7 @@ public class UserCountActivity extends BaseActivityWithToolBar
     @BindView(R.id.userCountTxt)
     TextView userCountTxt;
     //适配器
-    private QuickAdapter<UserModel> userAdapter;
+    private QuickAdapter<_User> userAdapter;
 
     @Override
     public int setLayoutId() {
@@ -68,7 +65,7 @@ public class UserCountActivity extends BaseActivityWithToolBar
     //初始化title
     private void initTitleBar() {
         //右键
-        setLeftImage(R.mipmap.ic_arrow_back_white_24dp, new View.OnClickListener() {
+        setLeftImage(R.mipmap.btn_back, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -99,10 +96,10 @@ public class UserCountActivity extends BaseActivityWithToolBar
         userRecyclerView.addItemDecoration(decoration);
 
         //adapter初始化
-        userAdapter = new QuickAdapter<UserModel>(getContext(),
-                R.layout.item_user_count_layout, new ArrayList<UserModel>()) {
+        userAdapter = new QuickAdapter<_User>(getContext(),
+                R.layout.item_user_count_layout, new ArrayList<_User>()) {
             @Override
-            protected void convert(BaseAdapterHelper helper, final UserModel item) {
+            protected void convert(BaseAdapterHelper helper, final _User item) {
                 helper.setText(R.id.userName, item.getNickName());
                 helper.setImageUrl(R.id.userImg, item.getHeadImageUrl());
                 helper.setOnClickListener(R.id.user_count_item_root, new View.OnClickListener() {
@@ -141,24 +138,14 @@ public class UserCountActivity extends BaseActivityWithToolBar
      * 获取用户的信息
      */
     private void getUserData() {
-        BmobQuery query = new BmobQuery("_User");
+        BmobQuery<_User> query = new BmobQuery<_User>();
         query.setLimit(100);
-        query.findObjectsByTable(new QueryListener<JSONArray>() {
+        query.findObjects(new FindListener<_User>() {
             @Override
-            public void done(JSONArray jsonArray, BmobException e) {
-                //  LogUtils.i("数据" + jsonArray);
-                if (null == jsonArray || jsonArray.length() == 0) {
-                    return;
-                }
-                userAdapter.clear();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    try {
-                        JSONObject object = (JSONObject) jsonArray.get(i);
-                        userAdapter.add(new UserModel(object.optString("nickName"),
-                                object.optString("headImageUrl")));
-                    } catch (JSONException e1) {
-                        e1.printStackTrace();
-                    }
+            public void done(List<_User> list, BmobException e) {
+                if (null!=list){
+                    userAdapter.clear();
+                    userAdapter.addAll(list);
                 }
             }
         });

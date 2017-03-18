@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/online_goods_item_root"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/offset_64dp"
+              android:layout_margin="@dimen/offset_4dp"
+              android:background="@color/white"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:padding="@dimen/offset_4dp">
+
+    <TextView
+        android:id="@+id/item_manager_user_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset_4dp"
+        android:layout_weight="1"
+        android:text="名字"/>
+
+    <TextView
+        android:id="@+id/item_manager_user_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset_4dp"
+        android:text="账户"/>
+
+</LinearLayout>

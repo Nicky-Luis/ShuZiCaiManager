@@ -9,6 +9,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.jiangtao.shuzicaimanager.basic.app.BasicApp;
 import com.jiangtao.shuzicaimanager.basic.network.APIInteractive;
 import com.jiangtao.shuzicaimanager.basic.utils.AppCrashUtils;
+import com.jiangtao.shuzicaimanager.model.entry.ManagerUser;
 
 import cn.bmob.v3.Bmob;
 
@@ -23,6 +24,8 @@ public class Application extends BasicApp {
     public static Context APPContext;
     //线程池
     public static ThreadPoolUtils AppThreadPool;
+    //管理类用户实例
+    public static ManagerUser userInstance;
 
     //获取比目所有APP信息
     public static String getUserURl() {

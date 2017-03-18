@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/activity_goods_manager"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_light_white"
+    android:orientation="vertical"
+    tools:context="com.jiangtao.shuzicaimanager.model.statistical.GoodsManagerActivity">
+
+    <!--toolbar-->
+    <include layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/unprocessed_order_ly"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/offset_48dp"
+        android:layout_marginLeft="@dimen/offset_10dp"
+        android:layout_marginRight="@dimen/offset_10dp"
+        android:layout_marginTop="@dimen/offset_10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/offset_2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/offset_4dp"
+            android:text="待处理订单"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/font_size_normal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_more"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/history_order_ly"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/offset_48dp"
+        android:layout_marginLeft="@dimen/offset_10dp"
+        android:layout_marginRight="@dimen/offset_10dp"
+        android:layout_marginTop="@dimen/offset_1dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/offset_2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/offset_4dp"
+            android:text="历史订单"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/font_size_normal"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_more"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/online_goods_ly"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/offset_48dp"
+        android:layout_marginLeft="@dimen/offset_10dp"
+        android:layout_marginRight="@dimen/offset_10dp"
+        android:layout_marginTop="@dimen/offset_10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/offset_2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/offset_4dp"
+            android:text="线上商品"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/font_size_normal"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_more"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nervous_goods_Ly"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/offset_48dp"
+        android:layout_marginLeft="@dimen/offset_10dp"
+        android:layout_marginRight="@dimen/offset_10dp"
+        android:layout_marginTop="@dimen/offset_1dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/offset_2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/offset_4dp"
+            android:text="库存紧张商品"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/font_size_normal"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_more"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sold_out_goods_Ly"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/offset_48dp"
+        android:layout_marginLeft="@dimen/offset_10dp"
+        android:layout_marginRight="@dimen/offset_10dp"
+        android:layout_marginTop="@dimen/offset_1dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/offset_2dp">
+
+        <TextView
+            android:id="@+id/quanshu_info_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/offset_4dp"
+            android:text="已售罄的商品"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/font_size_normal"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_more"/>
+    </LinearLayout>
+
+
+</LinearLayout>

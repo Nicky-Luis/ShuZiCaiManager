@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/user_count_item_root"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/offset_4dp"
+              android:background="@color/white"
+              android:gravity="center_vertical"
+              android:orientation="vertical"
+              android:padding="@dimen/offset_4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/item_unprocessed_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset_4dp"
+            android:layout_weight="1"
+            android:text="2017-02-18"/>
+
+        <TextView
+            android:id="@+id/goods_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset_4dp"
+            android:text="虚拟商品"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset_10dp"
+        android:orientation="horizontal">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/goodsImg"
+            android:layout_width="@dimen/offset_38dp"
+            android:layout_height="@dimen/offset_38dp"
+            android:layout_margin="@dimen/offset_2dp"
+            android:background="@color/main_light_white"
+            android:scaleType="centerCrop"
+            app:placeholderImage="@mipmap/icon"
+            fresco:roundAsCircle="true"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_goods_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/offset_4dp"
+                android:layout_weight="1"
+                android:text="商品名字"/>
+
+            <TextView
+                android:id="@+id/goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/offset_4dp"
+                android:text="56金币"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset_4dp"
+        android:text="兑换人：某某某"/>
+
+    <TextView
+        android:id="@+id/user_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset_4dp"
+        android:text="账户：51768778"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/order_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset_4dp"
+            android:layout_weight="1"
+            android:text="状态：未处理"/>
+
+        <Button
+            android:id="@+id/set_order_flag_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标记为已处理"/>
+    </LinearLayout>
+</LinearLayout>

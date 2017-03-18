@@ -5,10 +5,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_light_white"
     android:orientation="vertical"
     tools:context="com.jiangtao.shuzicaimanager.model.person.PersonActivity">
-
     <!--toolbar-->
     <include layout="@layout/toolbar"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/offset_88dp"
+        android:layout_marginTop="@dimen/offset_10dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/offset_2dp">
+
+        <TextView
+            android:id="@+id/manager_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="管理员：13802536944"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/font_size_large_high"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/manager_user"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/offset_64dp"
+        android:layout_marginBottom="1px"
+        android:layout_marginTop="@dimen/offset_10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/offset_2dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/offset_4dp"
+            android:text="查看管理员"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/font_size_normal"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_more"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/offset_20dp"
+        android:layout_marginRight="@dimen/offset_20dp"
+        android:layout_marginTop="@dimen/offset_28dp"
+        android:background="@color/main_orange"
+        android:text="退出登录"
+        android:textColor="@color/white"/>
 </LinearLayout>

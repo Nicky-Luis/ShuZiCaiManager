@@ -1,4 +1,4 @@
-package com.jiangtao.shuzicaimanager.helper;
+package com.jiangtao.shuzicaimanager.common.helper;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

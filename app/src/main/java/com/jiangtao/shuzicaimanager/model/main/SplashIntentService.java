@@ -4,16 +4,21 @@ import android.app.IntentService;
 import android.content.Intent;
 
 import com.blankj.utilcode.utils.LogUtils;
+import com.blankj.utilcode.utils.ToastUtils;
 import com.jiangtao.shuzicaimanager.AppConfigure;
-import com.jiangtao.shuzicaimanager.basic.network.APIInteractive;
-import com.jiangtao.shuzicaimanager.basic.network.INetworkResponse;
+import com.jiangtao.shuzicaimanager.Application;
+import com.jiangtao.shuzicaimanager.model.entry.ManagerUser;
+import com.jiangtao.shuzicaimanager.model.person.LoginActivity;
 
-import org.json.JSONObject;
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by Nicky on 2017/1/23.
  */
-
 public class SplashIntentService extends IntentService {
 
     public SplashIntentService() {
@@ -32,13 +37,15 @@ public class SplashIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+
         if (AppConfigure.userIsLogin()) {
             String name = AppConfigure.getUserName();
             String password = AppConfigure.getUserPassword();
             LogUtils.i("-----开始登录,name:" + name);
             startLogin(name, password);
         } else {
-            LogUtils.i("-----不需要自动登录----");
+            Intent intent1 = new Intent(SplashIntentService.this, LoginActivity.class);
+            startActivity(intent1);
         }
     }
 
@@ -55,17 +62,22 @@ public class SplashIntentService extends IntentService {
      * @param account
      * @param password
      */
-    public void startLogin(String account, String password) {
-        //登录
-        APIInteractive.startLogin(account, password, new INetworkResponse() {
+    public void startLogin(String account, final String password) {
+        BmobQuery<ManagerUser> query = new BmobQuery<ManagerUser>();
+        query.addWhereEqualTo("account", account);
+        query.findObjects(new FindListener<ManagerUser>() {
             @Override
-            public void onFailure(int code) {
-                LogUtils.i("登录失败,code:" + code);
-            }
-
-            @Override
-            public void onSucceed(JSONObject result) {
-                LogUtils.i("登录成功,result:" + result);
+            public void done(List<ManagerUser> list, BmobException e) {
+                if (e == null && list.size() == 1
+                        && list.get(0).getPassword().equals(password)) {
+                    Application.userInstance = list.get(0);
+                    Intent intent = new Intent(SplashIntentService.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(SplashIntentService.this, LoginActivity.class);
+                    startActivity(intent);
+                    ToastUtils.showShortToast("登录失败");
+                }
             }
         });
     }
