@@ -11,8 +11,6 @@ public class _User extends BmobUser {
 
     //昵称
     private String nickName;
-    //token
-    private String token;
     //受邀请码
     private String InviteeCode;
     //邀请码
@@ -23,24 +21,28 @@ public class _User extends BmobUser {
     private int gender;
     //地址
     private String address;
+    //金币值
+    private float goldValue;
+    //银币值
+    private float silverValue;
 
-    public _User(String nickName, String token, String inviteeCode, String invitationCode, String headImageUrl,
-                 int gender, String address) {
+    public _User() {
+    }
+
+    public _User(String nickName, String inviteeCode, String invitationCode, String headImageUrl, int gender, String
+            address, float goldValue, float silverValue) {
         this.nickName = nickName;
-        this.token = token;
         InviteeCode = inviteeCode;
         InvitationCode = invitationCode;
         this.headImageUrl = headImageUrl;
         this.gender = gender;
         this.address = address;
+        this.goldValue = goldValue;
+        this.silverValue = silverValue;
     }
 
     public String getNickName() {
         return nickName;
-    }
-
-    public String getToken() {
-        return token;
     }
 
     public String getInviteeCode() {
@@ -63,12 +65,16 @@ public class _User extends BmobUser {
         return address;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public float getGoldValue() {
+        return goldValue;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public float getSilverValue() {
+        return silverValue;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public void setInviteeCode(String inviteeCode) {
@@ -89,5 +95,13 @@ public class _User extends BmobUser {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setGoldValue(float goldValue) {
+        this.goldValue = goldValue;
+    }
+
+    public void setSilverValue(float silverValue) {
+        this.silverValue = silverValue;
     }
 }

@@ -7,11 +7,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jiangtao.shuzicaimanager.R;
 import com.jiangtao.shuzicaimanager.basic.base.BaseActivityWithToolBar;
-import com.jiangtao.shuzicaimanager.model.entry.WealthValue;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.jiangtao.shuzicaimanager.model.entry._User;
 
 import java.util.List;
 
@@ -19,7 +15,6 @@ import butterknife.BindView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.QueryListener;
 
 
 public class UserDetailActivity extends BaseActivityWithToolBar {
@@ -63,7 +58,6 @@ public class UserDetailActivity extends BaseActivityWithToolBar {
         initTitleBar();
         String objectId = getIntent().getStringExtra(Intent_Key_Id);
         getUserData(objectId);
-        getWealthData(objectId);
     }
 
     @Override
@@ -87,49 +81,27 @@ public class UserDetailActivity extends BaseActivityWithToolBar {
      * 获取用户的信息
      */
     private void getUserData(String objectId) {
-        BmobQuery query = new BmobQuery("_User");
-        query.addWhereEqualTo("objectId", objectId);
-        query.findObjectsByTable(new QueryListener<JSONArray>() {
+        BmobQuery<_User> query = new BmobQuery<_User>();
+        query.findObjects(new FindListener<_User>() {
             @Override
-            public void done(JSONArray jsonArray, BmobException e) {
-                //  LogUtils.i("数据" + jsonArray);
-                if (null == jsonArray || jsonArray.length() == 0) {
-                    return;
-                }
-                try {
-                    JSONObject object = (JSONObject) jsonArray.get(0);
-                    Uri uri = Uri.parse(object.optString("headImageUrl"));
+            public void done(List<_User> list, BmobException e) {
+                if (e == null && list != null && list.size() > 0) {
+                    _User user = list.get(0);
+                    Uri uri = Uri.parse(user.getHeadImageUrl());
                     userDetailImg.setImageURI(uri);
-                    userDetailName.setText(object.optString("nickName"));
-                    userDetailStatus.setText(object.optString("nickName"));
-                    userDetailCity.setText(object.optString("address"));
-                    userDetailSex.setText(object.optInt("gender") == 1 ? "男" : "女");
-                    userDetailAccount.setText("电话：" + object.optString("mobilePhoneNumber"));
-                    String time = object.opt("createdAt").toString();
-                    userDetailRegisterTime.setText("注册时间：" + time);
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
+                    userDetailName.setText(user.getNickName());
+                    userDetailStatus.setText(user.getNickName());
+                    userDetailCity.setText(user.getAddress());
+                    userDetailSex.setText(user.getGender() == 1 ? "男" : "女");
+                    userDetailAccount.setText("电话：" + user.getMobilePhoneNumber());
+                    userDetailRegisterTime.setText("注册时间：" + user.getCreatedAt());
+                    userDetailGold.setText(user.getGoldValue() + "");
+                    userDetailSilver.setText(user.getSilverValue() + "");
+                } else {
+
                 }
             }
         });
     }
 
-    /**
-     * 获取用户的财富
-     */
-    private void getWealthData(String objectId) {
-        BmobQuery<WealthValue> query = new BmobQuery<WealthValue>();
-        query.addWhereEqualTo("userId", objectId);
-        query.findObjects(new FindListener<WealthValue>() {
-            @Override
-            public void done(List<WealthValue> list, BmobException e) {
-                //  LogUtils.i("数据" + jsonArray);
-                if (null == list || list.size() == 0) {
-                    return;
-                }
-                userDetailGold.setText(list.get(0).getGoldValue() + "");
-                userDetailSilver.setText(list.get(0).getSilverValue() + "");
-            }
-        });
-    }
 }

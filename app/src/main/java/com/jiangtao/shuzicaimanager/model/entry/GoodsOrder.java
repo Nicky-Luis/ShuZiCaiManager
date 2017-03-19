@@ -16,8 +16,6 @@ public class GoodsOrder  extends BmobObject {
     private _User user;
     //商品对象
     private Goods goodObj;
-    //财富值
-    private WealthValue wealthValue;
     //财富详情
     private WealthDetail wealthDetail;
     //电话
@@ -33,13 +31,12 @@ public class GoodsOrder  extends BmobObject {
     //订单处理人
     private ManagerUser optUser;
 
-    public GoodsOrder(String userId, _User user, Goods goodObj, WealthValue wealthValue, WealthDetail wealthDetail,
+    public GoodsOrder(String userId, _User user, Goods goodObj, WealthDetail wealthDetail,
                       String receivingPhone, String address, BmobDate orderTime, String contacts, int orderStatus,
                       ManagerUser optUser) {
         this.userId = userId;
         this.user = user;
         this.goodObj = goodObj;
-        this.wealthValue = wealthValue;
         this.wealthDetail = wealthDetail;
         this.receivingPhone = receivingPhone;
         this.address = address;
@@ -64,9 +61,6 @@ public class GoodsOrder  extends BmobObject {
         return goodObj;
     }
 
-    public WealthValue getWealthValue() {
-        return wealthValue;
-    }
 
     public WealthDetail getWealthDetail() {
         return wealthDetail;
@@ -108,9 +102,6 @@ public class GoodsOrder  extends BmobObject {
         this.goodObj = goodObj;
     }
 
-    public void setWealthValue(WealthValue wealthValue) {
-        this.wealthValue = wealthValue;
-    }
 
     public void setWealthDetail(WealthDetail wealthDetail) {
         this.wealthDetail = wealthDetail;
