@@ -99,7 +99,7 @@ public class NervousGoodsActivity extends BaseActivityWithToolBar
             protected void convert(final BaseAdapterHelper helper, final Goods item) {
                 helper.setImageUrl(R.id.nervous_goods_img, item.getGoodsImgUrl());
                 helper.setText(R.id.nervous_goods_name, item.getGoodsName());
-                helper.setText(R.id.nervous_goods_remain, "库存：" + item.getInventory());
+                helper.setText(R.id.nervous_goods_remain, "库存：" + item.getInventory()+"件");
                 helper.setText(R.id.nervous_goods_price, "价格：" + item.getGoodsPrice() + "金币");
 
                 helper.setOnClickListener(R.id.nervous_goods_item_root, new View.OnClickListener() {
@@ -124,6 +124,7 @@ public class NervousGoodsActivity extends BaseActivityWithToolBar
 
 
     private void initData() {
+        showProgress();
         getOrdersValue();
     }
 
@@ -133,10 +134,12 @@ public class NervousGoodsActivity extends BaseActivityWithToolBar
     private void getOrdersValue() {
         BmobQuery<Goods> query = new BmobQuery<Goods>();
         query.addWhereLessThanOrEqualTo("inventory", 5);
+        query.addWhereGreaterThan("inventory", 0);
         query.setLimit(500);
         query.findObjects(new FindListener<Goods>() {
             @Override
             public void done(List<Goods> list, BmobException e) {
+                hideProgress();
                 nervous_order_refresh_widget.setRefreshing(false);
                 if (null != list) {
                     LogUtils.i("数据数为：" + list.size());

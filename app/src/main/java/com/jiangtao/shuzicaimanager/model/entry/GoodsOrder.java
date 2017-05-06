@@ -2,7 +2,6 @@ package com.jiangtao.shuzicaimanager.model.entry;
 
 
 import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.datatype.BmobDate;
 
 /**
  * Created by Nicky on 2017/2/7.
@@ -22,8 +21,6 @@ public class GoodsOrder  extends BmobObject {
     private String receivingPhone;
     //收货地址
     private String address;
-    //下单时间
-    private BmobDate orderTime;
     //联系人
     private String contacts;
     //订单的状态,0：未处理，1:已处理
@@ -31,8 +28,8 @@ public class GoodsOrder  extends BmobObject {
     //订单处理人
     private ManagerUser optUser;
 
-    public GoodsOrder(String userId, _User user, Goods goodObj, WealthDetail wealthDetail,
-                      String receivingPhone, String address, BmobDate orderTime, String contacts, int orderStatus,
+    public GoodsOrder(String userId, _User user, Goods goodObj,  WealthDetail wealthDetail,
+                      String receivingPhone, String address,  String contacts, int orderStatus,
                       ManagerUser optUser) {
         this.userId = userId;
         this.user = user;
@@ -40,7 +37,6 @@ public class GoodsOrder  extends BmobObject {
         this.wealthDetail = wealthDetail;
         this.receivingPhone = receivingPhone;
         this.address = address;
-        this.orderTime = orderTime;
         this.contacts = contacts;
         this.orderStatus = orderStatus;
         this.optUser = optUser;
@@ -74,9 +70,6 @@ public class GoodsOrder  extends BmobObject {
         return address;
     }
 
-    public BmobDate getOrderTime() {
-        return orderTime;
-    }
 
     public String getContacts() {
         return contacts;
@@ -102,7 +95,6 @@ public class GoodsOrder  extends BmobObject {
         this.goodObj = goodObj;
     }
 
-
     public void setWealthDetail(WealthDetail wealthDetail) {
         this.wealthDetail = wealthDetail;
     }
@@ -113,10 +105,6 @@ public class GoodsOrder  extends BmobObject {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public void setOrderTime(BmobDate orderTime) {
-        this.orderTime = orderTime;
     }
 
     public void setContacts(String contacts) {
@@ -130,5 +118,6 @@ public class GoodsOrder  extends BmobObject {
     public void setOptUser(ManagerUser optUser) {
         this.optUser = optUser;
     }
+
 
 }

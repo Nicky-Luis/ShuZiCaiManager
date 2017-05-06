@@ -2,19 +2,28 @@ package com.jiangtao.shuzicaimanager.model.statistical;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.ToastUtils;
+import com.jiangtao.shuzicaimanager.Application;
 import com.jiangtao.shuzicaimanager.R;
 import com.jiangtao.shuzicaimanager.basic.base.BaseFragment;
-import com.jiangtao.shuzicaimanager.model.entry.GameInfo;
+import com.jiangtao.shuzicaimanager.model.entry.Config;
 import com.jiangtao.shuzicaimanager.model.entry.Goods;
 import com.jiangtao.shuzicaimanager.model.entry.GuessForecastRecord;
 import com.jiangtao.shuzicaimanager.model.entry.GuessMantissaRecord;
 import com.jiangtao.shuzicaimanager.model.entry.GuessWholeRecord;
 import com.jiangtao.shuzicaimanager.model.entry.WealthDetail;
+import com.jiangtao.shuzicaimanager.model.statistical.game.ForecastRecordActivity;
+import com.jiangtao.shuzicaimanager.model.statistical.game.MantissaRecordActivity;
+import com.jiangtao.shuzicaimanager.model.statistical.game.WholeRecordActivity;
+import com.jiangtao.shuzicaimanager.model.statistical.goods.GoodsManagerActivity;
+import com.jiangtao.shuzicaimanager.model.statistical.user.UserCountActivity;
+import com.jiangtao.shuzicaimanager.model.statistical.wealth.WealthDetailActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -31,6 +40,7 @@ import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
 
 /**
  * Created by Nicky on 2017/3/5.
@@ -84,8 +94,8 @@ public class StatisticalFragment extends BaseFragment
 
     //设置点击事件
     @OnClick({R.id.userStatisticsLy, R.id.wealthStatisticsLy, R.id.upDownStatisticsLy,
-            R.id.mantissaStatisticsLy,R.id.wholeStatisticsLy,R.id.goodsStatisticsLy,
-            R.id.goodsStatisticsLy1,R.id.userStatisticsLy1, R.id.wealthStatisticsLy1,
+            R.id.mantissaStatisticsLy, R.id.wholeStatisticsLy, R.id.goodsStatisticsLy,
+            R.id.goodsStatisticsLy1, R.id.userStatisticsLy1, R.id.wealthStatisticsLy1,
             R.id.upDownStatisticsLy1})
     public void OnClick(View view) {
         switch (view.getId()) {
@@ -163,15 +173,34 @@ public class StatisticalFragment extends BaseFragment
         getData();
     }
 
-    private void getData(){
+    private void getData() {
+        //用户总数
         getUserCount();
-        getTodayAdded();
-        getWealthValue();
-        getTodayPeopleCount();
-        getTodayWealthValue();
-        getNewestGameInfo();
-        getGoodsInfo();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //财务管理
+                getWealthValue();
+            }
+        }, 200);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //游戏数据
+                getNewestGameInfo();
+            }
+        }, 400);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //获取商品
+                getGoodsInfo();
+            }
+        }, 600);
     }
+
     //初始化swipe
     private void initSwipeRefresh() {
         refreshLayout.setColorSchemeResources(
@@ -205,6 +234,8 @@ public class StatisticalFragment extends BaseFragment
                 refreshLayout.setRefreshing(false);
                 if (e == null) {
                     main_user_count.setText("总用户：" + count);
+                    //今日新增人数
+                    getTodayAdded();
                 } else {
                     main_user_count.setText("总用户：0");
                     Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -241,18 +272,24 @@ public class StatisticalFragment extends BaseFragment
     private void getWealthValue() {
         BmobQuery<WealthDetail> query = new BmobQuery<WealthDetail>();
         query.addWhereEqualTo("operationType", WealthDetail.Operation_Type_Recharge);
-        query.setLimit(5000);
+        query.setLimit(1000);
         query.findObjects(new FindListener<WealthDetail>() {
             @Override
             public void done(List<WealthDetail> list, BmobException e) {
                 refreshLayout.setRefreshing(false);
-                float count = 0;
-                if (null != list) {
-                    for (WealthDetail wealth : list) {
-                        count = count + wealth.getOperationValue();
+                if (e == null) {
+                    int count = 0;
+                    if (null != list) {
+                        for (WealthDetail wealth : list) {
+                            count = count + wealth.getOperationValue();
+                        }
                     }
+                    wealth_value_txt.setText("总金额：" + count);
+                    //今日充值人数
+                    getRechargePeopleCount();
+                    //今日充值金额
+                    getTodayWealthValue();
                 }
-                wealth_value_txt.setText("总金额：" + count);
             }
         });
     }
@@ -260,7 +297,7 @@ public class StatisticalFragment extends BaseFragment
     /***
      * 获取今日充值数据
      */
-    private void getTodayPeopleCount() {
+    private void getRechargePeopleCount() {
         BmobQuery<WealthDetail> query = new BmobQuery<WealthDetail>();
         query.addWhereEqualTo("operationType", WealthDetail.Operation_Type_Recharge);
         Calendar now = Calendar.getInstance();
@@ -293,7 +330,7 @@ public class StatisticalFragment extends BaseFragment
             @Override
             public void done(List<WealthDetail> list, BmobException e) {
                 refreshLayout.setRefreshing(false);
-                float count = 0;
+                int count = 0;
                 if (null != list) {
                     for (WealthDetail wealth : list) {
                         count = count + wealth.getOperationValue();
@@ -306,24 +343,20 @@ public class StatisticalFragment extends BaseFragment
 
     //获取最新一期的游戏数据
     private void getNewestGameInfo() {
-        BmobQuery<GameInfo> query = new BmobQuery<GameInfo>();
-        query.findObjects(new FindListener<GameInfo>() {
+        BmobQuery<Config> query = new BmobQuery<Config>();
+        query.getObject(Config.objectId, new QueryListener<Config>() {
             @Override
-            public void done(List<GameInfo> list, BmobException e) {
+            public void done(Config gameInfo, BmobException e) {
                 refreshLayout.setRefreshing(false);
-                float count = 0;
-                if (null != list && list.size() > 0) {
-                    for (GameInfo info : list) {
-                        if (info.getGameType() == GameInfo.type_zhangdie) {
-                            getGuessForecastRecordCount(info.getNewestNum());
-                        } else if (info.getGameType() == GameInfo.type_quanshu) {
-                            getGuessMantissaRecordCount(info.getNewestNum());
-                        } else if (info.getGameType() == GameInfo.type_weishu) {
-                            getGuessWholeRecordCount(info.getNewestNum());
-                        }
-                    }
+                if (e == null && gameInfo != null) {
+                    Application.appConfig = gameInfo;
+                    int num = gameInfo.getNewestNum();
+                    getGuessForecastRecordCount(num);
+                    getGuessMantissaRecordCount(num);
+                    getGuessWholeRecordCount(num);
+                } else {
+                    ToastUtils.showShortToast("获取数据失败");
                 }
-                recharge_value_txt.setText("今日：" + count + "元");
             }
         });
     }
@@ -331,36 +364,48 @@ public class StatisticalFragment extends BaseFragment
     //猜涨跌
     private void getGuessForecastRecordCount(int periodCount) {
         BmobQuery<GuessForecastRecord> query = new BmobQuery<GuessForecastRecord>();
-        query.addWhereEqualTo("periodCount", periodCount);
+        query.addWhereEqualTo("periodNum", periodCount);
         query.count(GuessForecastRecord.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
                 refreshLayout.setRefreshing(false);
-                join_person_count_txt.setText("总人数：" + integer);
+                if (null == integer) {
+                    join_person_count_txt.setText("总人数：0");
+                } else {
+                    join_person_count_txt.setText("总人数：" + integer);
+                }
             }
         });
 
         //查询猜涨人数
         BmobQuery<GuessForecastRecord> query1 = new BmobQuery<GuessForecastRecord>();
-        query1.addWhereEqualTo("periodCount", periodCount);
-        query1.addWhereEqualTo("periodValue", 1);
+        query1.addWhereEqualTo("periodNum", periodCount);
+        query1.addWhereEqualTo("betValue", 1);
         query1.count(GuessForecastRecord.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
                 refreshLayout.setRefreshing(false);
-                join_up_count_txt.setText("猜涨：" + integer);
+                if (null == integer) {
+                    join_up_count_txt.setText("猜涨：0");
+                } else {
+                    join_up_count_txt.setText("猜涨：" + integer);
+                }
             }
         });
 
         //查询猜跌人数
         BmobQuery<GuessForecastRecord> query2 = new BmobQuery<GuessForecastRecord>();
-        query2.addWhereEqualTo("periodCount", periodCount);
-        query2.addWhereEqualTo("periodValue", 0);
+        query2.addWhereEqualTo("periodNum", periodCount);
+        query2.addWhereEqualTo("betValue", 0);
         query2.count(GuessForecastRecord.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
                 refreshLayout.setRefreshing(false);
-                join_down_count_txt.setText("猜跌：" + integer);
+                if (null == integer) {
+                    join_down_count_txt.setText("猜跌：0");
+                } else {
+                    join_down_count_txt.setText("猜跌：" + integer);
+                }
             }
         });
     }
@@ -373,7 +418,11 @@ public class StatisticalFragment extends BaseFragment
             @Override
             public void done(Integer integer, BmobException e) {
                 refreshLayout.setRefreshing(false);
-                weishu_info_txt.setText("尾数（" + periodCount + "期）   参与人数：" + integer);
+                int count = 0;
+                if (null != integer) {
+                    count = integer;
+                }
+                weishu_info_txt.setText("尾数（" + periodCount + "期）   参与总数：" + count);
             }
         });
     }
@@ -386,7 +435,11 @@ public class StatisticalFragment extends BaseFragment
             @Override
             public void done(Integer integer, BmobException e) {
                 refreshLayout.setRefreshing(false);
-                quanshu_info_txt.setText("全数（" + periodCount + "期）   参与人数：" + integer);
+                int count = 0;
+                if (null != integer) {
+                    count = integer;
+                }
+                quanshu_info_txt.setText("全数（" + periodCount + "期）   参与总数：" + count);
             }
         });
     }
@@ -399,29 +452,50 @@ public class StatisticalFragment extends BaseFragment
             @Override
             public void done(Integer integer, BmobException e) {
                 refreshLayout.setRefreshing(false);
-                goods_count_txt.setText("总数：" + integer);
+                if (e == null) {
+                    int count = 0;
+                    if (null != integer) {
+                        count = integer;
+                    }
+                    goods_count_txt.setText("商品总数：" + count);
+                    startGetNervousGoods();
+                    startGetNullGoods();
+                }
             }
         });
+    }
 
-        //查询紧张的库存
-        BmobQuery<Goods> query1 = new BmobQuery<Goods>();
-        query1.addWhereLessThanOrEqualTo("inventory", 5);
-        query1.count(Goods.class, new CountListener() {
-            @Override
-            public void done(Integer integer, BmobException e) {
-                refreshLayout.setRefreshing(false);
-                goods_not_enough_txt.setText("库存紧张：" + integer);
-            }
-        });
-
-        //查询库存为空的商品
+    //查询库存为空的商品
+    private void startGetNullGoods() {
         BmobQuery<Goods> query2 = new BmobQuery<Goods>();
         query2.addWhereLessThanOrEqualTo("inventory", 0);
         query2.count(Goods.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
                 refreshLayout.setRefreshing(false);
-                goods_zero_txt.setText("库存为空：" + integer);
+                int count = 0;
+                if (null != integer) {
+                    count = integer;
+                }
+                goods_zero_txt.setText("库存为空：" + count);
+            }
+        });
+    }
+
+    //查询紧张的库存
+    private void startGetNervousGoods() {
+        BmobQuery<Goods> query1 = new BmobQuery<Goods>();
+        query1.addWhereLessThanOrEqualTo("inventory", 5);
+        query1.addWhereGreaterThan("inventory", 0);
+        query1.count(Goods.class, new CountListener() {
+            @Override
+            public void done(Integer integer, BmobException e) {
+                refreshLayout.setRefreshing(false);
+                int count = 0;
+                if (null != integer) {
+                    count = integer;
+                }
+                goods_not_enough_txt.setText("库存紧张：" + count);
             }
         });
     }

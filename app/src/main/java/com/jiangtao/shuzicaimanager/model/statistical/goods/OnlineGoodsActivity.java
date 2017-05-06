@@ -70,7 +70,7 @@ public class OnlineGoodsActivity extends BaseActivityWithToolBar
                 startActivity(intent);
             }
         });
-        setCenterTitle("线上商品");
+        setCenterTitle("所有商品");
     }
 
     //初始化swipe
@@ -100,7 +100,7 @@ public class OnlineGoodsActivity extends BaseActivityWithToolBar
             protected void convert(final BaseAdapterHelper helper, final Goods item) {
                 helper.setImageUrl(R.id.online_goods_img, item.getGoodsImgUrl());
                 helper.setText(R.id.online_goods_name, item.getGoodsName());
-                helper.setText(R.id.online_goods_remain, "库存：" + item.getInventory());
+                helper.setText(R.id.online_goods_remain, "库存：" + item.getInventory()+"件");
                 helper.setText(R.id.online_goods_price, "价格：" + item.getGoodsPrice() + "金币");
 
                 helper.setOnClickListener(R.id.online_goods_item_root, new View.OnClickListener() {
@@ -125,18 +125,20 @@ public class OnlineGoodsActivity extends BaseActivityWithToolBar
 
 
     private void initData() {
+        showProgress();
         getOrdersValue();
     }
 
     /***
-     * 获取所有未处理订单
+     * 获取所有商品
      */
     private void getOrdersValue() {
         BmobQuery<Goods> query = new BmobQuery<Goods>();
-        query.setLimit(500);
+        query.setLimit(100);
         query.findObjects(new FindListener<Goods>() {
             @Override
             public void done(List<Goods> list, BmobException e) {
+                hideProgress();
                 online_order_refresh_widget.setRefreshing(false);
                 if (null != list) {
                     LogUtils.i("数据数为：" + list.size());

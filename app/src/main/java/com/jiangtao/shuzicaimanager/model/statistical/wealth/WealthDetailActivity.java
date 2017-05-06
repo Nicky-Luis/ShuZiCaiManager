@@ -1,4 +1,4 @@
-package com.jiangtao.shuzicaimanager.model.statistical;
+package com.jiangtao.shuzicaimanager.model.statistical.wealth;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -82,7 +82,7 @@ public class WealthDetailActivity extends BaseActivityWithToolBar
 
     //初始化
     private void initRecyclerView() {
-        //两列
+        //1列
         wealthRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,
                 StaggeredGridLayoutManager.VERTICAL));
         //添加头部布局
@@ -98,33 +98,11 @@ public class WealthDetailActivity extends BaseActivityWithToolBar
                 helper.setText(R.id.wealth_date_txt, item.getCreatedAt());
                 helper.setText(R.id.wealthUserName, "充值金额");
                 helper.setText(R.id.wealthCount, item.getOperationValue() + "元");
+                helper.setText(R.id.transactionId, item.getObjectId());
             }
         };
         wealthRecyclerView.setAdapter(wealthAdapter);
     }
-
-
-    /***
-     * 获取所有财富数据
-     */
-    private void getWealthValue() {
-        BmobQuery<WealthDetail> query = new BmobQuery<WealthDetail>();
-        query.addWhereEqualTo("operationType", WealthDetail.Operation_Type_Recharge);
-        query.setLimit(5000);
-        query.findObjects(new FindListener<WealthDetail>() {
-            @Override
-            public void done(List<WealthDetail> list, BmobException e) {
-                float count = 0;
-                if (null != list) {
-                    for (WealthDetail wealth : list) {
-                        count = count + wealth.getOperationValue();
-                    }
-                }
-                wealthCountTxt.setText("总金额：" + count);
-            }
-        });
-    }
-
 
     /***
      * 获取充值数据
@@ -132,13 +110,20 @@ public class WealthDetailActivity extends BaseActivityWithToolBar
     private void getWealthDetail() {
         BmobQuery<WealthDetail> query = new BmobQuery<WealthDetail>();
         query.addWhereEqualTo("operationType", WealthDetail.Operation_Type_Recharge);
+        query.setLimit(1000);
         query.findObjects(new FindListener<WealthDetail>() {
             @Override
             public void done(List<WealthDetail> list, BmobException e) {
+                wealthRefreshWidget.setRefreshing(false);
+                int count = 0;
                 if (null != list && list.size() > 0) {
+                    for (WealthDetail wealth : list) {
+                        count = count + wealth.getOperationValue();
+                    }
                     wealthAdapter.clear();
                     wealthAdapter.addAll(list);
                 }
+                wealthCountTxt.setText("总金额：" + count);
             }
         });
     }
@@ -149,7 +134,6 @@ public class WealthDetailActivity extends BaseActivityWithToolBar
     }
 
     private void initData() {
-        getWealthValue();
         getWealthDetail();
     }
 

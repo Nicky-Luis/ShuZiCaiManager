@@ -20,6 +20,8 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 /**
@@ -105,10 +107,12 @@ public class BaseAdapterHelper extends RecyclerView.ViewHolder {
         if (null==url){
             return this;
         }
-        //代码中
         Uri uri = Uri.parse(url);
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(uri)
+                .build();
         SimpleDraweeView view = retrieveView(viewId);
-        view.setImageURI(uri);//之后的一切全交给fresco就行了
+        view.setController(controller);
         return this;
     }
 

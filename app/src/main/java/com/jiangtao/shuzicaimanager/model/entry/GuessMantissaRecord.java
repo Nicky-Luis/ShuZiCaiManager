@@ -19,7 +19,7 @@ public class GuessMantissaRecord extends BmobObject {
     //用户id
     private String userId;
     //押注金币数值
-    private float goldValue;
+    private int goldValue;
     //押注时间
     private BmobDate time;
     //类型
@@ -29,7 +29,7 @@ public class GuessMantissaRecord extends BmobObject {
     //押注期数
     private int periodNum;
     //押注的数据
-    private float guessValue;
+    private int guessValue;
     //实际的指数
     private float indexResult;
     //是否中奖
@@ -37,8 +37,8 @@ public class GuessMantissaRecord extends BmobObject {
     //获取的奖励数量
     private float rewardCount;
 
-    public GuessMantissaRecord(String userId, float goldValue, BmobDate time, int guessType, int indexType, int
-            periodNum, float guessValue, float indexResult, boolean isReward, float rewardCount) {
+    public GuessMantissaRecord(String userId, int goldValue, BmobDate time, int guessType, int indexType, int
+            periodNum, int guessValue, float indexResult, boolean isReward, float rewardCount) {
         this.userId = userId;
         this.goldValue = goldValue;
         this.time = time;
@@ -58,7 +58,7 @@ public class GuessMantissaRecord extends BmobObject {
         return userId;
     }
 
-    public float getGoldValue() {
+    public int getGoldValue() {
         return goldValue;
     }
 
@@ -78,7 +78,7 @@ public class GuessMantissaRecord extends BmobObject {
         return periodNum;
     }
 
-    public float getGuessValue() {
+    public int getGuessValue() {
         return guessValue;
     }
 
@@ -98,7 +98,7 @@ public class GuessMantissaRecord extends BmobObject {
         this.userId = userId;
     }
 
-    public void setGoldValue(float goldValue) {
+    public void setGoldValue(int goldValue) {
         this.goldValue = goldValue;
     }
 
@@ -118,7 +118,7 @@ public class GuessMantissaRecord extends BmobObject {
         this.periodNum = periodNum;
     }
 
-    public void setGuessValue(float guessValue) {
+    public void setGuessValue(int guessValue) {
         this.guessValue = guessValue;
     }
 

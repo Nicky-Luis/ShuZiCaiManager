@@ -37,6 +37,7 @@
             android:id="@+id/sold_out_goods_remain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/red"
             android:layout_margin="@dimen/offset_4dp"
             android:text="剩余："/>
 

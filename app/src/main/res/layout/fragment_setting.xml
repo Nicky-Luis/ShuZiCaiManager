@@ -61,6 +61,38 @@
                 android:src="@mipmap/right_more"/>
 
         </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1px"
+            android:layout_marginTop="@dimen/offset_10dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/offset_8dp">
+
+            <TextView
+                android:id="@+id/treadTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/offset_4dp"
+                android:text="虚拟用户管理"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/font_size_normal"/>
+
+            <Button
+                android:id="@+id/stopTreadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/offset_4dp"
+                android:text="暂停交易"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/font_size_normal"/>
+
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

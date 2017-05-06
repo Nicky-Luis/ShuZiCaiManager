@@ -34,21 +34,21 @@
         <activity android:name=".model.main.MainActivity"/>
         <activity android:name=".model.person.LoginActivity">
         </activity>
-        <activity android:name=".model.statistical.UserCountActivity">
+        <activity android:name=".model.statistical.user.UserCountActivity">
         </activity>
-        <activity android:name=".model.statistical.WealthActivity">
+        <activity android:name=".model.statistical.wealth.WealthActivity">
         </activity>
-        <activity android:name=".model.statistical.ForecastRecordActivity">
+        <activity android:name=".model.statistical.game.ForecastRecordActivity">
         </activity>
-        <activity android:name=".model.statistical.MantissaRecordActivity">
+        <activity android:name=".model.statistical.game.MantissaRecordActivity">
         </activity>
-        <activity android:name=".model.statistical.WholeRecordActivity">
+        <activity android:name=".model.statistical.game.WholeRecordActivity">
         </activity>
-        <activity android:name=".model.statistical.UserDetailActivity">
+        <activity android:name=".model.statistical.user.UserDetailActivity">
         </activity>
-        <activity android:name=".model.statistical.WealthDetailActivity">
+        <activity android:name=".model.statistical.wealth.WealthDetailActivity">
         </activity>
-        <activity android:name=".model.statistical.GoodsManagerActivity">
+        <activity android:name=".model.statistical.goods.GoodsManagerActivity">
         </activity>
         <activity android:name=".model.statistical.goods.UnprocessedOrderActivity">
         </activity>
@@ -76,6 +76,14 @@
         <activity android:name=".model.setting.AddVirtualUserActivity">
         </activity>
         <activity android:name=".model.setting.RuleSetActivity">
+        </activity>
+        <activity android:name=".model.statistical.user.GameRecordActivity">
+        </activity>
+        <activity android:name=".model.statistical.user.WealthRecordActivity">
+        </activity>
+        <activity android:name=".model.statistical.user.ExchangeRecordActivity">
+        </activity>
+        <activity android:name=".model.statistical.user.InviteRecordActivity">
         </activity>
     </application>
 

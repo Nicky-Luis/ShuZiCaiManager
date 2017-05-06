@@ -1,6 +1,5 @@
-package com.jiangtao.shuzicaimanager.model.statistical;
+package com.jiangtao.shuzicaimanager.model.statistical.game;
 
-import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -9,12 +8,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+import com.jiangtao.shuzicaimanager.Application;
 import com.jiangtao.shuzicaimanager.R;
 import com.jiangtao.shuzicaimanager.basic.adpter.base_adapter_helper_recyclerview.BaseAdapterHelper;
 import com.jiangtao.shuzicaimanager.basic.adpter.base_adapter_helper_recyclerview.QuickAdapter;
 import com.jiangtao.shuzicaimanager.basic.base.BaseActivityWithToolBar;
 import com.jiangtao.shuzicaimanager.common.helper.SpacesItemDecoration;
-import com.jiangtao.shuzicaimanager.model.entry.GameInfo;
+import com.jiangtao.shuzicaimanager.model.entry.Config;
 import com.jiangtao.shuzicaimanager.model.entry.GuessMantissaRecord;
 
 import java.util.ArrayList;
@@ -25,8 +25,10 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
 
 import static com.jiangtao.shuzicaimanager.model.entry.GuessMantissaRecord.Guess_Type_DoubleDirect;
+import static com.jiangtao.shuzicaimanager.model.entry.GuessMantissaRecord.Guess_Type_DoubleGroup;
 import static com.jiangtao.shuzicaimanager.model.entry.GuessMantissaRecord.Guess_Type_Percentile;
 
 public class MantissaRecordActivity extends BaseActivityWithToolBar
@@ -80,14 +82,6 @@ public class MantissaRecordActivity extends BaseActivityWithToolBar
             }
         });
         setCenterTitle("尾数预测");
-        setRightTitle("说明", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                //intent.setClass(GuessMantissaActivity.this, GuessMantissaDetailActivity.class);
-                //startActivity(intent);
-            }
-        });
     }
 
 
@@ -117,9 +111,9 @@ public class MantissaRecordActivity extends BaseActivityWithToolBar
             @Override
             protected void convert(BaseAdapterHelper helper, final GuessMantissaRecord item) {
                 helper.setText(R.id.mantiss_time, item.getCreatedAt());
-                helper.setText(R.id.mantiss_name, item.getUserId());
-                helper.setText(R.id.mantiss_forecast, String.valueOf(item.getGuessValue()));
-                helper.setText(R.id.mantiss_money, item.getGoldValue() + "银币");
+                helper.setText(R.id.mantiss_name, "用户：" + item.getUserId());
+                helper.setText(R.id.mantiss_forecast, "预测值：" + String.valueOf(item.getGuessValue()));
+                helper.setText(R.id.mantiss_money, item.getGoldValue() + "金币");
             }
         };
         mantissaRecyclerView.setAdapter(mantissAdapter);
@@ -132,6 +126,7 @@ public class MantissaRecordActivity extends BaseActivityWithToolBar
     private void getUserCount(int periodCount) {
         BmobQuery<GuessMantissaRecord> query = new BmobQuery<GuessMantissaRecord>();
         query.addWhereEqualTo("periodNum", periodCount);
+        query.addWhereEqualTo("guessType", currentGuessType);
         query.count(GuessMantissaRecord.class, new CountListener() {
             @Override
             public void done(Integer integer, BmobException e) {
@@ -163,13 +158,14 @@ public class MantissaRecordActivity extends BaseActivityWithToolBar
 
     //获取最新一期的游戏数据
     private void getNewestGameInfo() {
-        BmobQuery<GameInfo> query = new BmobQuery<GameInfo>();
-        query.addWhereEqualTo("gameType", GameInfo.type_weishu);
-        query.findObjects(new FindListener<GameInfo>() {
+        BmobQuery<Config> query = new BmobQuery<Config>();
+        query.getObject(Config.objectId, new QueryListener<Config>() {
             @Override
-            public void done(List<GameInfo> list, BmobException e) {
-                if (null != list && list.size() > 0) {
-                    int num = list.get(0).getNewestNum();
+            public void done(Config gameInfo, BmobException e) {
+                if (e == null && gameInfo != null) {
+                    Application.appConfig = gameInfo;
+                    int num = gameInfo.getNewestNum();
+                    setCenterTitle("尾数预测第(" + num + ")期");
                     getGamesData(num);
                     getUserCount(num);
                 }
@@ -193,7 +189,7 @@ public class MantissaRecordActivity extends BaseActivityWithToolBar
                         break;
 
                     case R.id.mantissaThirdBtn:
-                        currentGuessType = GuessMantissaRecord.Guess_Type_DoubleGroup;
+                        currentGuessType = Guess_Type_DoubleGroup;
                         break;
                 }
                 getNewestGameInfo();

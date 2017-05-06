@@ -1,4 +1,4 @@
-package com.jiangtao.shuzicaimanager.model.statistical;
+package com.jiangtao.shuzicaimanager.model.statistical.user;
 
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -124,6 +124,7 @@ public class UserCountActivity extends BaseActivityWithToolBar
         query.count(BmobUser.class, new CountListener() {
             @Override
             public void done(Integer count, BmobException e) {
+                userRefreshWidget.setRefreshing(false);
                 if (e == null) {
                     userCountTxt.setText("总用户：" + count);
                 } else {
@@ -139,11 +140,12 @@ public class UserCountActivity extends BaseActivityWithToolBar
      */
     private void getUserData() {
         BmobQuery<_User> query = new BmobQuery<_User>();
-        query.setLimit(100);
+        query.setLimit(1000);
         query.findObjects(new FindListener<_User>() {
             @Override
             public void done(List<_User> list, BmobException e) {
-                if (null!=list){
+                userRefreshWidget.setRefreshing(false);
+                if (null != list) {
                     userAdapter.clear();
                     userAdapter.addAll(list);
                 }

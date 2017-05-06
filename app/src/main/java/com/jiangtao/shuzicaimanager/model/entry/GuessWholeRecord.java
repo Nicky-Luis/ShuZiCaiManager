@@ -13,7 +13,7 @@ public class GuessWholeRecord extends BmobObject {
     //用户id
     private String userId;
     //押注金币数值
-    private float goldValue;
+    private int goldValue;
     //押注时间
     private BmobDate time;
     //押注期数
@@ -27,7 +27,7 @@ public class GuessWholeRecord extends BmobObject {
     //获取的奖励数量
     private float rewardCount;
 
-    public GuessWholeRecord(String userId, float goldValue, BmobDate time, int periodNum, float guessValue, float
+    public GuessWholeRecord(String userId, int goldValue, BmobDate time, int periodNum, float guessValue, float
             indexResult, boolean isReward, float rewardCount) {
         this.userId = userId;
         this.goldValue = goldValue;
@@ -46,7 +46,7 @@ public class GuessWholeRecord extends BmobObject {
         return userId;
     }
 
-    public float getGoldValue() {
+    public int getGoldValue() {
         return goldValue;
     }
 
@@ -78,7 +78,7 @@ public class GuessWholeRecord extends BmobObject {
         this.userId = userId;
     }
 
-    public void setGoldValue(float goldValue) {
+    public void setGoldValue(int goldValue) {
         this.goldValue = goldValue;
     }
 

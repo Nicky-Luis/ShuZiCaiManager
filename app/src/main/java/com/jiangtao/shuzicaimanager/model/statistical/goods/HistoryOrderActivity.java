@@ -62,7 +62,7 @@ public class HistoryOrderActivity extends BaseActivityWithToolBar
                 finish();
             }
         });
-        setCenterTitle("待处理订单");
+        setCenterTitle("所有历史订单");
     }
 
     //初始化swipe
@@ -81,9 +81,24 @@ public class HistoryOrderActivity extends BaseActivityWithToolBar
         //两列
         history_orderRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,
                 StaggeredGridLayoutManager.VERTICAL));
+        history_orderRecyclerView.setNestedScrollingEnabled(false);
         //添加头部布局
         SpacesItemDecoration decoration = new SpacesItemDecoration(2);
         history_orderRecyclerView.addItemDecoration(decoration);
+        history_orderRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int topRowVerticalPosition =
+                        (recyclerView == null || recyclerView.getChildCount() == 0) ? 0 : recyclerView.getChildAt(0)
+                                .getTop();
+                history_order_refresh_widget.setEnabled(topRowVerticalPosition >= 0);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
 
         //adapter初始化
         ordersAapter = new QuickAdapter<GoodsOrder>(getContext(),
@@ -98,7 +113,18 @@ public class HistoryOrderActivity extends BaseActivityWithToolBar
                 helper.setText(R.id.user_name, "兑换人：" + item.getContacts());
                 helper.setText(R.id.user_account, "账户：" + item.getReceivingPhone());
                 helper.setText(R.id.order_status, "状态：" + (item.getOrderStatus() == 0 ? "未处理" : "已处理"));
-                helper.setBtnText(R.id.set_order_flag_btn,item.getOrderStatus() == 1 ? "标记为未处理" : "标记为已处理");
+                helper.setBtnText(R.id.set_order_flag_btn, item.getOrderStatus() == 1 ? "标记为未处理" : "标记为已处理");
+
+                if (item.getOptUser() != null && item.getOrderStatus() == 1) {
+                    helper.setVisible(R.id.order_opt_time, true);
+                    helper.setVisible(R.id.order_opt_person, false);
+                    LogUtils.e("处理人:" + item.getOptUser());
+                    helper.setText(R.id.order_opt_time, "处理时间：" + item.getUpdatedAt());
+                    //helper.setText(R.id.order_opt_person, "处理人：" + item.getOptUser().getName());
+                } else {
+                    helper.setVisible(R.id.order_opt_time, false);
+                    helper.setVisible(R.id.order_opt_person, false);
+                }
 
                 helper.setOnClickListener(R.id.set_order_flag_btn, new View.OnClickListener() {
                     @Override
@@ -111,23 +137,17 @@ public class HistoryOrderActivity extends BaseActivityWithToolBar
                             public void done(BmobException e) {
                                 hideProgress();
                                 if (e == null) {
-                                    helper.setBtnText(R.id.order_status,
-                                            item.getOrderStatus() == 1 ? "标记为未处理" : "标记为已处理");
+                                    ToastUtils.showShortToast("操作成功");
+                                    ordersAapter.notifyDataSetChanged();
+                                } else {
+                                    LogUtils.e("操作失败" + e);
+                                    ToastUtils.showShortToast("操作失败");
                                 }
                             }
                         });
                     }
                 });
-                if (item.getOptUser() != null) {
-                    helper.setVisible(R.id.order_opt_time,true);
-                    helper.setVisible(R.id.order_opt_person,true);
 
-                    helper.setText(R.id.order_opt_time, "处理时间：" + item.getUpdatedAt());
-                    helper.setText(R.id.order_opt_person, "处理人：" + item.getOptUser().getName());
-                }else {
-                    helper.setVisible(R.id.order_opt_time,false);
-                    helper.setVisible(R.id.order_opt_person,false);
-                }
             }
         };
         history_orderRecyclerView.setAdapter(ordersAapter);
@@ -140,6 +160,7 @@ public class HistoryOrderActivity extends BaseActivityWithToolBar
 
 
     private void initData() {
+        showProgress();
         getOrdersValue();
     }
 
@@ -148,12 +169,13 @@ public class HistoryOrderActivity extends BaseActivityWithToolBar
      */
     private void getOrdersValue() {
         BmobQuery<GoodsOrder> query = new BmobQuery<GoodsOrder>();
-        query.setLimit(500);
-        query.include("user");
+        query.setLimit(50);
+        //query.include("optUser");
         query.include("goodObj");
         query.findObjects(new FindListener<GoodsOrder>() {
             @Override
             public void done(List<GoodsOrder> list, BmobException e) {
+                hideProgress();
                 history_order_refresh_widget.setRefreshing(false);
                 if (null != list) {
                     LogUtils.i("数据数为：" + list.size());

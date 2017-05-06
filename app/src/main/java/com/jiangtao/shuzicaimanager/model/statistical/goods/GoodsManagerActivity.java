@@ -1,19 +1,23 @@
-package com.jiangtao.shuzicaimanager.model.statistical;
+package com.jiangtao.shuzicaimanager.model.statistical.goods;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.jiangtao.shuzicaimanager.R;
 import com.jiangtao.shuzicaimanager.basic.base.BaseActivityWithToolBar;
-import com.jiangtao.shuzicaimanager.model.statistical.goods.HistoryOrderActivity;
-import com.jiangtao.shuzicaimanager.model.statistical.goods.NervousGoodsActivity;
-import com.jiangtao.shuzicaimanager.model.statistical.goods.OnlineGoodsActivity;
-import com.jiangtao.shuzicaimanager.model.statistical.goods.SoldOutActivity;
-import com.jiangtao.shuzicaimanager.model.statistical.goods.UnprocessedOrderActivity;
+import com.jiangtao.shuzicaimanager.model.entry.GoodsOrder;
 
+import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.CountListener;
 
 public class GoodsManagerActivity extends BaseActivityWithToolBar {
+
+    @BindView(R.id.unprocessed_count)
+    TextView unprocessed_count;
 
     @Override
     public int setLayoutId() {
@@ -23,6 +27,7 @@ public class GoodsManagerActivity extends BaseActivityWithToolBar {
     @Override
     protected void onInitialize() {
         initTitleBar();
+        getOrdersCount();
     }
 
     @Override
@@ -77,5 +82,31 @@ public class GoodsManagerActivity extends BaseActivityWithToolBar {
             }
         });
         setCenterTitle("商品统计");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getOrdersCount();
+    }
+
+    /**
+     * 获取待处理订单总数
+     */
+    private void getOrdersCount() {
+        BmobQuery<GoodsOrder> query = new BmobQuery<GoodsOrder>();
+        query.addWhereEqualTo("orderStatus", 0);
+        query.count(GoodsOrder.class, new CountListener() {
+            @Override
+            public void done(final Integer integer, BmobException e) {
+                int count = 0;
+                if (null != integer) {
+                    count = integer;
+                }
+                if (count > 0) {
+                    unprocessed_count.setText(String.valueOf(count));
+                }
+            }
+        });
     }
 }

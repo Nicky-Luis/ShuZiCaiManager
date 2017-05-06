@@ -1,4 +1,4 @@
-package com.jiangtao.shuzicaimanager.model.statistical;
+package com.jiangtao.shuzicaimanager.model.statistical.wealth;
 
 import android.content.Intent;
 import android.view.View;

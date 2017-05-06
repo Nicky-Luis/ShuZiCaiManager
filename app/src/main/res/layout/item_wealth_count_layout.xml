@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/offset_4dp"
             android:layout_weight="1"
-            android:text="名字"/>
+            android:text="充值金额"/>
 
         <TextView
             android:id="@+id/wealthCount"
@@ -36,10 +36,25 @@
             android:text="30元"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/transactionId"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/offset_4dp"
-        android:text="交易号：51768778"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset_4dp"
+            android:layout_weight="1"
+            android:text="交易号"/>
+
+        <TextView
+            android:id="@+id/transactionId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset_4dp"
+            android:text=""/>
+    </LinearLayout>
+
+
 </LinearLayout>

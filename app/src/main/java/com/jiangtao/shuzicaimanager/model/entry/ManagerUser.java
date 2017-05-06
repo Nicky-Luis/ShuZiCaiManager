@@ -44,4 +44,13 @@ public class ManagerUser extends BmobObject {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "ManagerUser{" +
+                "name='" + name + '\'' +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

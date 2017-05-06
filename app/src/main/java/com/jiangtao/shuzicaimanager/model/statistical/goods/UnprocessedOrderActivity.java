@@ -25,6 +25,7 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 
+//待处理订单
 public class UnprocessedOrderActivity extends BaseActivityWithToolBar
         implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -86,7 +87,19 @@ public class UnprocessedOrderActivity extends BaseActivityWithToolBar
         //添加头部布局
         SpacesItemDecoration decoration = new SpacesItemDecoration(2);
         unprocessed_orderRecyclerView.addItemDecoration(decoration);
+        unprocessed_orderRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int topRowVerticalPosition =
+                        (recyclerView == null || recyclerView.getChildCount() == 0) ? 0 : recyclerView.getChildAt(0).getTop();
+                unprocessed_orderRecyclerView.setEnabled(topRowVerticalPosition >= 0);
+            }
 
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
         //adapter初始化
         ordersAapter = new QuickAdapter<GoodsOrder>(getContext(),
                 R.layout.item_unprocessed_order_layout, new ArrayList<GoodsOrder>()) {
@@ -100,6 +113,8 @@ public class UnprocessedOrderActivity extends BaseActivityWithToolBar
                 helper.setText(R.id.user_name, "兑换人：" + item.getContacts());
                 helper.setText(R.id.user_account, "账户：" + item.getReceivingPhone());
                 helper.setText(R.id.order_status, "状态：" + (item.getOrderStatus() == 0 ? "未处理" : "已处理"));
+                helper.setBtnText(R.id.set_order_flag_btn,  (item.getOrderStatus() == 0 ?"标记为已处理":"标记为未处理"));
+                //事件监听
                 helper.setOnClickListener(R.id.set_order_flag_btn, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -111,7 +126,11 @@ public class UnprocessedOrderActivity extends BaseActivityWithToolBar
                             public void done(BmobException e) {
                                 hideProgress();
                                 if (e == null) {
-                                    helper.setBtnText(R.id.order_status, "标记为未处理");
+                                    ordersAapter.notifyDataSetChanged();
+                                    ToastUtils.showLongToast("操作成功");
+                                } else {
+                                    LogUtils.e("操作失败" + e);
+                                    ToastUtils.showLongToast("操作失败");
                                 }
                             }
                         });
@@ -129,6 +148,7 @@ public class UnprocessedOrderActivity extends BaseActivityWithToolBar
 
 
     private void initData() {
+        showProgress();
         getOrdersValue();
     }
 
@@ -144,6 +164,7 @@ public class UnprocessedOrderActivity extends BaseActivityWithToolBar
         query.findObjects(new FindListener<GoodsOrder>() {
             @Override
             public void done(List<GoodsOrder> list, BmobException e) {
+                hideProgress();
                 unprocessed_order_refresh_widget.setRefreshing(false);
                 if (null != list) {
                     LogUtils.i("数据数为：" + list.size());

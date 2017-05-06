@@ -69,7 +69,7 @@ public class SoldOutActivity extends BaseActivityWithToolBar
                 startActivity(intent);
             }
         });
-        setCenterTitle("库存紧张的商品");
+        setCenterTitle("库存为空的商品");
     }
 
     //初始化swipe
@@ -99,7 +99,7 @@ public class SoldOutActivity extends BaseActivityWithToolBar
             protected void convert(final BaseAdapterHelper helper, final Goods item) {
                 helper.setImageUrl(R.id.sold_out_goods_img, item.getGoodsImgUrl());
                 helper.setText(R.id.sold_out_goods_name, item.getGoodsName());
-                helper.setText(R.id.sold_out_goods_remain, "库存：" + item.getInventory());
+                helper.setText(R.id.sold_out_goods_remain, "库存为空");
                 helper.setText(R.id.sold_out_goods_price, "价格：" + item.getGoodsPrice() + "金币");
 
                 helper.setOnClickListener(R.id.sold_out_goods_item_root, new View.OnClickListener() {
@@ -124,6 +124,7 @@ public class SoldOutActivity extends BaseActivityWithToolBar
 
 
     private void initData() {
+        showProgress();
         getOrdersValue();
     }
 
@@ -137,6 +138,7 @@ public class SoldOutActivity extends BaseActivityWithToolBar
         query.findObjects(new FindListener<Goods>() {
             @Override
             public void done(List<Goods> list, BmobException e) {
+                hideProgress();
                 sold_out_order_refresh_widget.setRefreshing(false);
                 if (null != list) {
                     LogUtils.i("数据数为：" + list.size());

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_light_white"
     android:orientation="vertical"
-    tools:context="com.jiangtao.shuzicaimanager.model.statistical.UserCountActivity">
+    tools:context="com.jiangtao.shuzicaimanager.model.statistical.user.UserCountActivity">
 
     <!--toolbar-->
     <include layout="@layout/toolbar"/>
@@ -44,14 +44,14 @@
                         android:id="@+id/up_down_CountTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="总计：3576人"
+                        android:text=""
                         android:textSize="@dimen/font_size_huge"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/offset_20dp"
-                        android:text="-------------------------用户列表-------------------------"
+                        android:text="——————用户列表——————"
                         android:textSize="@dimen/font_size_middle"/>
                 </LinearLayout>
             </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>

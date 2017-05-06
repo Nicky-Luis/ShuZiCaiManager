@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/offset_8dp"
-                    android:text="总用户"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/font_size_xlarge_high"
                     android:textStyle="bold"/>
@@ -70,7 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/offset_8dp"
-                        android:text="今日新增"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/font_size_normal"/>
 
@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/offset_8dp"
-                    android:text="总金额"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/font_size_xlarge_high"
                     android:textStyle="bold"/>
@@ -132,7 +132,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/offset_8dp"
-                        android:text="今日充值"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/font_size_normal"/>
 
@@ -142,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/offset_8dp"
                         android:layout_marginTop="@dimen/offset_8dp"
-                        android:text="今日总额"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/font_size_normal"/>
                 </LinearLayout>
@@ -185,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/offset_8dp"
-                    android:text="总人数"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/font_size_xlarge_high"
                     android:textStyle="bold"/>
@@ -201,7 +201,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/offset_8dp"
-                        android:text="猜涨人数"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/font_size_normal"/>
 
@@ -211,7 +211,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/offset_8dp"
                         android:layout_marginTop="@dimen/offset_8dp"
-                        android:text="猜跌人数"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/font_size_normal"/>
                 </LinearLayout>
@@ -310,7 +310,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/offset_8dp"
-                    android:text="总商品"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/font_size_xlarge_high"
                     android:textStyle="bold"/>
@@ -326,7 +326,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/offset_8dp"
-                        android:text="库存紧张"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/font_size_normal"/>
 
@@ -336,7 +336,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/offset_8dp"
                         android:layout_marginTop="@dimen/offset_8dp"
-                        android:text="已经售罄"
+                        android:text=""
                         android:textColor="@color/gray"
                         android:textSize="@dimen/font_size_normal"/>
                 </LinearLayout>

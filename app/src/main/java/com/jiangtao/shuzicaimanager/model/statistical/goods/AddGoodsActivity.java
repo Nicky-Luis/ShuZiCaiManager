@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.blankj.utilcode.utils.LogUtils;
 import com.blankj.utilcode.utils.ToastUtils;
@@ -11,6 +12,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.jiangtao.shuzicaimanager.R;
 import com.jiangtao.shuzicaimanager.basic.base.BaseActivityWithToolBar;
 import com.jiangtao.shuzicaimanager.basic.utils.EditTextUtils;
+import com.jiangtao.shuzicaimanager.basic.widget.CustomListViewDialog;
 import com.jiangtao.shuzicaimanager.common.event_message.SelectGalleryPhotoMsg;
 import com.jiangtao.shuzicaimanager.common.photo_gallery.imageloader.GalleyActivity;
 import com.jiangtao.shuzicaimanager.model.entry.Goods;
@@ -19,6 +21,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,10 +50,15 @@ public class AddGoodsActivity extends BaseActivityWithToolBar {
     //商品描述
     @BindView(R.id.goods_add_detail)
     EditText goods_add_detail;
+    //good_type_name
+    @BindView(R.id.good_type_name)
+    TextView good_type_name;
     //头像路径
     private String filePath;
+    //类型
+    private int type = 0;
 
-    @OnClick({R.id.saveGoods, R.id.goods_add_img})
+    @OnClick({R.id.saveGoods, R.id.goods_add_img, R.id.ly_good_type})
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.saveGoods:
@@ -59,6 +67,10 @@ public class AddGoodsActivity extends BaseActivityWithToolBar {
 
             case R.id.goods_add_img:
                 selectPhotos();
+                break;
+
+            case R.id.ly_good_type:
+                selectType();
                 break;
         }
     }
@@ -92,6 +104,26 @@ public class AddGoodsActivity extends BaseActivityWithToolBar {
         setCenterTitle("添加商品");
     }
 
+
+    /***
+     * 选择类型
+     */
+    private void selectType() {
+        final List<String> datas = new ArrayList<>();
+        datas.add("实物商品");
+        datas.add("手机充值卡");
+        datas.add("Q币充值卡");
+        final CustomListViewDialog dialog = new CustomListViewDialog(AddGoodsActivity.this, datas);
+        dialog.setClickCallBack(new CustomListViewDialog.IClickCallBack() {
+            @Override
+            public void Onclick(View view, int which) {
+                good_type_name.setText(datas.get(which));
+                type = which;
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
     /**
      * 选择照片
@@ -163,13 +195,19 @@ public class AddGoodsActivity extends BaseActivityWithToolBar {
             ToastUtils.showShortToast("图片信息有误");
             return;
         }
+
+        int inventory = Integer.valueOf(EditTextUtils.getContent(goods_add_inventory));
+        if (inventory <= 0) {
+            ToastUtils.showShortToast("库存必须大于0");
+            return;
+        }
         Goods goods = new Goods(
                 EditTextUtils.getContent(goods_add_name),
                 EditTextUtils.getContent(goods_add_detail),
-                Float.valueOf(EditTextUtils.getContent(goods_add_price)),
+                Integer.valueOf(EditTextUtils.getContent(goods_add_price)),
                 imageUrl,
-                Integer.valueOf(EditTextUtils.getContent(goods_add_inventory)),
-                0,
+                inventory,
+                type,
                 1);
         //保存信息
         goods.save(new SaveListener<String>() {

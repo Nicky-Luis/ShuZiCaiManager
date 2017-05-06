@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_light_white"
     android:orientation="vertical"
-    tools:context="com.jiangtao.shuzicaimanager.model.statistical.UserDetailActivity">
+    tools:context="com.jiangtao.shuzicaimanager.model.statistical.user.UserDetailActivity">
 
     <!--toolbar-->
     <include layout="@layout/toolbar"/>
@@ -67,6 +67,7 @@
                                 android:id="@+id/userDetailStatus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:visibility="gone"
                                 android:layout_margin="@dimen/offset_4dp"
                                 android:text="状态"/>
 
@@ -161,6 +162,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ly_game_record"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/offset_10dp"
@@ -185,6 +187,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ly_wealth_record"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/offset_1dp"
@@ -207,6 +210,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ly_exchange_record"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/offset_1dp"
@@ -229,6 +233,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ly_invite_record"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/offset_10dp"
@@ -256,6 +261,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/offset_20dp"
+                android:visibility="gone"
                 android:text="拉黑用户"/>
         </LinearLayout>
 

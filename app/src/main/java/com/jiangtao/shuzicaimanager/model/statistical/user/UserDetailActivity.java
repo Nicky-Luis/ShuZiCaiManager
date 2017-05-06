@@ -1,9 +1,11 @@
-package com.jiangtao.shuzicaimanager.model.statistical;
+package com.jiangtao.shuzicaimanager.model.statistical.user;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jiangtao.shuzicaimanager.R;
 import com.jiangtao.shuzicaimanager.basic.base.BaseActivityWithToolBar;
@@ -12,6 +14,7 @@ import com.jiangtao.shuzicaimanager.model.entry._User;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -48,15 +51,55 @@ public class UserDetailActivity extends BaseActivityWithToolBar {
     TextView userDetailSilver;
 
 
+    //设置点击事件
+    @OnClick({R.id.ly_game_record, R.id.ly_wealth_record,
+            R.id.ly_exchange_record, R.id.ly_invite_record})
+    public void OnClick(View view) {
+        switch (view.getId()) {
+
+            case R.id.ly_game_record: {
+                Intent intent = new Intent(UserDetailActivity.this, GameRecordActivity.class);
+                intent.putExtra(GameRecordActivity.Intent_Key_Id, objectId);
+                startActivity(intent);
+            }
+            break;
+
+            case R.id.ly_wealth_record: {
+                Intent intent = new Intent(UserDetailActivity.this, WealthRecordActivity.class);
+                intent.putExtra(WealthRecordActivity.Intent_Key_Id, objectId);
+                startActivity(intent);
+            }
+            break;
+
+            case R.id.ly_exchange_record: {
+                Intent intent = new Intent(UserDetailActivity.this, ExchangeRecordActivity.class);
+                intent.putExtra(ExchangeRecordActivity.Intent_Key_Id, objectId);
+                startActivity(intent);
+            }
+            break;
+
+            case R.id.ly_invite_record: {
+                Intent intent = new Intent(UserDetailActivity.this, InviteRecordActivity.class);
+                intent.putExtra(InviteRecordActivity.Intent_Key_Id, objectId);
+                startActivity(intent);
+            }
+            break;
+
+        }
+    }
+
     @Override
     public int setLayoutId() {
         return R.layout.activity_user_detail;
     }
 
+    //objectId
+    private String objectId;
+
     @Override
     protected void onInitialize() {
         initTitleBar();
-        String objectId = getIntent().getStringExtra(Intent_Key_Id);
+        objectId = getIntent().getStringExtra(Intent_Key_Id);
         getUserData(objectId);
     }
 
@@ -79,9 +122,12 @@ public class UserDetailActivity extends BaseActivityWithToolBar {
 
     /**
      * 获取用户的信息
+     *
+     * @param objectId
      */
     private void getUserData(String objectId) {
         BmobQuery<_User> query = new BmobQuery<_User>();
+        query.addWhereEqualTo("objectId", objectId);
         query.findObjects(new FindListener<_User>() {
             @Override
             public void done(List<_User> list, BmobException e) {
@@ -98,10 +144,9 @@ public class UserDetailActivity extends BaseActivityWithToolBar {
                     userDetailGold.setText(user.getGoldValue() + "");
                     userDetailSilver.setText(user.getSilverValue() + "");
                 } else {
-
+                    ToastUtils.showLongToast("数据错误");
                 }
             }
         });
     }
-
 }

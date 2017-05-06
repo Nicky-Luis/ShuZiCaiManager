@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_light_white"
     android:orientation="vertical"
-    tools:context="com.jiangtao.shuzicaimanager.model.statistical.UserCountActivity">
+    tools:context="com.jiangtao.shuzicaimanager.model.statistical.user.UserCountActivity">
 
     <!--toolbar-->
     <include layout="@layout/toolbar"/>
@@ -26,7 +26,6 @@
                 android:id="@+id/history_orderRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-
         </FrameLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
