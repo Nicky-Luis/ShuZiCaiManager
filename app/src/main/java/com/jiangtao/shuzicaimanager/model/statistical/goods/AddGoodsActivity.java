@@ -56,7 +56,7 @@ public class AddGoodsActivity extends BaseActivityWithToolBar {
     //头像路径
     private String filePath;
     //类型
-    private int type = 0;
+    private int type = 3;
 
     @OnClick({R.id.saveGoods, R.id.goods_add_img, R.id.ly_good_type})
     public void OnClick(View view) {
@@ -113,6 +113,7 @@ public class AddGoodsActivity extends BaseActivityWithToolBar {
         datas.add("实物商品");
         datas.add("手机充值卡");
         datas.add("Q币充值卡");
+        datas.add("培训课程");
         final CustomListViewDialog dialog = new CustomListViewDialog(AddGoodsActivity.this, datas);
         dialog.setClickCallBack(new CustomListViewDialog.IClickCallBack() {
             @Override
